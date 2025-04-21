@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "format": "prettier --write .",
     "serve:ssr:veysel-demirel-angular-web-app": "node dist/veysel-demirel-angular-web-app/server/server.mjs"
   },
   "private": true,
@@ -39,6 +40,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
     "tailwindcss": "^4.1.4",
     "typescript": "~5.7.2"
   }

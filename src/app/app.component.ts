@@ -2,11 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'vd-root',
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: '<router-outlet />',
 })
-export class AppComponent {
-  title = 'veysel-demirel-angular-web-app';
-}
+export class VDComponent {}

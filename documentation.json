@@ -34,15 +34,15 @@
     "directives": [],
     "components": [
         {
-            "name": "AppComponent",
-            "id": "component-AppComponent-9e61ffa57821b6d248bb2fcfbe50eeb4008cc987758a43ef1b20f824e8e200d4cfe5b426c2e1b77e5091932b50d617b8afbba45a7e8fe50618dedfffefde56c7",
+            "name": "VDComponent",
+            "id": "component-VDComponent-9e61ffa57821b6d248bb2fcfbe50eeb4008cc987758a43ef1b20f824e8e200d4cfe5b426c2e1b77e5091932b50d617b8afbba45a7e8fe50618dedfffefde56c7",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-root",
+            "selector": "vd-root",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -79,7 +79,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterOutlet } from '@angular/router';\n\n@Component({\n  selector: 'app-root',\n  imports: [RouterOutlet],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.css'\n})\nexport class AppComponent {\n  title = 'veysel-demirel-angular-web-app';\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterOutlet } from '@angular/router';\n\n@Component({\n  selector: 'vd-root',\n  imports: [RouterOutlet],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.css'\n})\nexport class VDComponent {\n  title = 'veysel-demirel-angular-web-app';\n}\n",
             "styleUrl": "./app.component.css",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -443,7 +443,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "() => bootstrapApplication(AppComponent, config)"
+                "defaultValue": "() => bootstrapApplication(VDComponent, config)"
             },
             {
                 "name": "browserDistFolder",
@@ -587,7 +587,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "() => bootstrapApplication(AppComponent, config)"
+                    "defaultValue": "() => bootstrapApplication(VDComponent, config)"
                 }
             ],
             "src/app/app.config.server.ts": [
@@ -638,7 +638,7 @@
                 "filePath": "src/app/app.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "AppComponent",
+                "name": "VDComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/2",
                 "status": "low"

@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "prepare": "husky install",
     "lint": "ng lint",
-    "serve:ssr:veysel-demirel-angular-web-app": "node dist/veysel-demirel-angular-web-app/server/server.mjs"
+    "serve:ssr:veysel-demirel-angular-web-app": "node dist/veysel-demirel-angular-web-app/server/server.mjs",
+    "storybook": "ng run veysel-demirel-angular-web-app:storybook",
+    "build-storybook": "ng run veysel-demirel-angular-web-app:build-storybook"
   },
   "private": true,
   "dependencies": {
@@ -31,12 +33,21 @@
     "@angular-devkit/build-angular": "^19.2.8",
     "@angular/cli": "^19.2.8",
     "@angular/compiler-cli": "^19.2.0",
+    "@compodoc/compodoc": "^1.1.26",
+    "@storybook/addon-docs": "^8.6.12",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
+    "@storybook/addon-onboarding": "^8.6.12",
+    "@storybook/angular": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/test": "^8.6.12",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "angular-eslint": "19.3.0",
     "eslint": "^9.23.0",
+    "eslint-plugin-storybook": "^0.12.0",
     "husky": "^9.1.7",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
@@ -48,8 +59,14 @@
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "storybook": "^8.6.12",
     "tailwindcss": "^4.1.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "8.27.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

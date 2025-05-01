@@ -1,64 +1,85 @@
-import { DOCUMENT } from '@angular/common';
-import { afterNextRender, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { animate, frame, motionValue } from 'motion';
 
 @Component({
   selector: 'vd-custom-cursor',
   template: `
     <span
-      class="bg-primary pointer-events-none fixed top-0 left-0 z-8 h-8 w-8 -translate-1/2 rounded-full pointer-coarse:hidden"
-      #myCursor
+      #cursorEl
+      class="pointer-events-none fixed top-0 left-0 z-50 h-8 w-8 -translate-1/2 rounded-full bg-orange-500 opacity-50 pointer-coarse:hidden"
     ></span>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomCursorComponent {
-  @ViewChild('myCursor', { static: false }) private myCursor!: ElementRef<HTMLSpanElement>;
+export class CustomCursorComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('cursorEl', { static: false }) private cursorRef!: ElementRef<HTMLSpanElement>;
 
   private pointerX = motionValue(0);
   private pointerY = motionValue(0);
+  private pointerMoveHandler = this.onPointerMove.bind(this);
+  private hasFinePointer = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    afterNextRender(() => {
-      this.animateInit();
-    });
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.hasFinePointer = window.matchMedia('(pointer: fine)').matches;
   }
 
-  private animateInit(): void {
-    const myCursorEl: HTMLSpanElement = this.myCursor.nativeElement;
-    const { top, left, width, height } = myCursorEl.getBoundingClientRect();
-    const initialX = left + width / 2;
-    const initialY = top + height / 2;
+  ngAfterViewInit(): void {
+    if (!this.hasFinePointer) return;
+    this.initializeAnimation();
+    this.document.addEventListener('pointermove', this.pointerMoveHandler);
+  }
 
-    const springToPointer = () => {
-      animate(
-        myCursorEl,
-        {
-          x: this.pointerX.get() - initialX,
-          y: this.pointerY.get() - initialY,
-        },
-        { type: 'spring', stiffness: 100, damping: 10 },
-      );
+  private initializeAnimation(): void {
+    const el = this.cursorRef.nativeElement;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const originX = left + width / 2;
+    const originY = top + height / 2;
+
+    const scheduleSpring = () => {
+      frame.postRender(() => {
+        animate(
+          el,
+          { x: this.pointerX.get() - originX, y: this.pointerY.get() - originY },
+          { type: 'spring', stiffness: 100, damping: 10 },
+        );
+      });
     };
 
-    const scheduleSpringToPointer = () => {
-      frame.postRender(springToPointer);
-    };
-
-    this.pointerX.on('change', scheduleSpringToPointer);
-    this.pointerY.on('change', scheduleSpringToPointer);
+    this.pointerX.on('change', scheduleSpring);
+    this.pointerY.on('change', scheduleSpring);
 
     animate(
-      myCursorEl,
-      {
-        x: this.pointerX.get() - initialX,
-        y: this.pointerY.get() - initialY,
-      },
+      el,
+      { x: this.pointerX.get() - originX, y: this.pointerY.get() - originY },
       { type: 'spring', stiffness: 100, damping: 10 },
     );
+  }
 
-    this.document.addEventListener('pointermove', (e) => {
-      this.pointerX.set(e.clientX);
-      this.pointerY.set(e.clientY);
-    });
+  private onPointerMove(e: PointerEvent): void {
+    this.pointerX.set(e.clientX);
+    this.pointerY.set(e.clientY);
+  }
+
+  ngOnDestroy(): void {
+    if (this.hasFinePointer) {
+      this.document.removeEventListener('pointermove', this.pointerMoveHandler);
+    }
   }
 }

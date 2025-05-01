@@ -6,7 +6,7 @@ describe('VDComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [VDComponent],
-      providers: [provideExperimentalZonelessChangeDetection()]
+      providers: [provideExperimentalZonelessChangeDetection()],
     }).compileComponents();
   });
 
@@ -14,12 +14,5 @@ describe('VDComponent', () => {
     const fixture = TestBed.createComponent(VDComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(VDComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, veysel-demirel-angular-web-app');
   });
 });

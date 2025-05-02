@@ -3,7 +3,6 @@ import {
   Inject,
   OnInit,
   AfterViewInit,
-  OnDestroy,
   PLATFORM_ID,
   ChangeDetectionStrategy,
   ElementRef,
@@ -23,7 +22,7 @@ import { animate, frame, motionValue } from 'motion';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomCursorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CustomCursorComponent implements OnInit, AfterViewInit {
   @ViewChild('cursorEl', { static: false }) private cursorRef!: ElementRef<HTMLSpanElement>;
 
   private pointerX = motionValue(0);
@@ -46,6 +45,25 @@ export class CustomCursorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.hasFinePointer) return;
     this.initializeAnimation();
     this.document.addEventListener('pointermove', this.pointerMoveHandler);
+    this.addHoverListeners();
+  }
+
+  private addHoverListeners() {
+    const linkElements = this.document.querySelectorAll('a, button');
+    linkElements.forEach((el) => {
+      el.addEventListener('mouseenter', () => this.onElementHover(true));
+      el.addEventListener('mouseleave', () => this.onElementHover(false));
+    });
+  }
+
+  private onElementHover(isHovering: boolean) {
+    const el = this.cursorRef.nativeElement;
+
+    if (isHovering) {
+      animate(el, { opacity: '20%', scale: 2 });
+    } else {
+      animate(el, { opacity: '50%', scale: 1 });
+    }
   }
 
   private initializeAnimation(): void {
@@ -77,11 +95,5 @@ export class CustomCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private onPointerMove(e: PointerEvent): void {
     this.pointerX.set(e.clientX);
     this.pointerY.set(e.clientY);
-  }
-
-  ngOnDestroy(): void {
-    if (this.hasFinePointer) {
-      this.document.removeEventListener('pointermove', this.pointerMoveHandler);
-    }
   }
 }

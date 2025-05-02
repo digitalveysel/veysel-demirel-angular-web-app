@@ -44,7 +44,7 @@ interface IArticle {
             <button
               role="tab"
               aria-selected="true"
-              class="font-semibold {{ category?.isActive && 'text-orange-500' }}"
+              class="font-semibold cursor-pointer {{ category?.isActive && 'text-orange-500' }}"
             >
               {{ category.name }}
             </button>
@@ -55,7 +55,7 @@ interface IArticle {
         class="pointer-events-none absolute top-0 right-0 h-full w-10 bg-linear-to-r from-transparent to-neutral-800 select-none"
       ></span>
     </nav>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-12">
       @for (article of articles; track article.id) {
         <article
           id="{{ article.id }}"

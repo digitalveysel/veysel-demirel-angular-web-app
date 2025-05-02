@@ -1,8 +1,6 @@
 import {
   Component,
   ElementRef,
-  Inject,
-  PLATFORM_ID,
   QueryList,
   ViewChildren,
   ViewChild,
@@ -45,36 +43,32 @@ import { animate, stagger } from 'motion';
   </div>`,
 })
 export class LoaderColsComponent {
-  @ViewChild('container') private containerElement!: ElementRef<HTMLDivElement>;
-  @ViewChild('line') private lineElement!: ElementRef<HTMLSpanElement>;
-  @ViewChildren('bg') private bgElements!: QueryList<ElementRef<HTMLSpanElement>>;
-  @ViewChildren('border') private borderElements!: QueryList<ElementRef<HTMLSpanElement>>;
+  @ViewChild('container') private containerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('line') private lineRef!: ElementRef<HTMLSpanElement>;
+  @ViewChildren('bg') private bgRefs!: QueryList<ElementRef<HTMLSpanElement>>;
+  @ViewChildren('border') private borderRefs!: QueryList<ElementRef<HTMLSpanElement>>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+  constructor() {
     afterNextRender(() => {
       // Container animation
       animate(
-        this.containerElement.nativeElement,
+        this.containerRef.nativeElement,
         { zIndex: -1 },
-        { ease: 'linear', duration: 1, delay: 1 },
+        { ease: 'easeOut', duration: 1, delay: 1.4 },
       );
 
       // Line animation
-      animate(
-        this.lineElement.nativeElement,
-        { top: '100%' },
-        { ease: 'easeInOut', duration: 0.6 },
-      );
+      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.6 });
 
       // Borders animations
       animate(
-        this.borderElements.map((el) => el.nativeElement),
+        this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
         { ease: 'easeOut', duration: 0.6, delay: stagger(0.2, { startDelay: 0.2 }) },
       );
 
       // Backgrounds animations
-      this.bgElements.forEach((el, i) => {
+      this.bgRefs.forEach((el, i) => {
         if (i % 2 === 0) {
           animate(
             el.nativeElement,

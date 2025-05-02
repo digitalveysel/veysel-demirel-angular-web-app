@@ -12,7 +12,11 @@ import { animate, stagger } from 'motion';
 
 @Component({
   selector: 'vd-loader-cols',
-  template: ` <div class="pointer-events-none fixed inset-0 z-9 flex select-none" #container>
+  template: ` <div
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-9 flex select-none"
+    #container
+  >
     <span
       class="absolute -top-full left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-r from-neutral-900 via-neutral-100 to-neutral-900"
       #line

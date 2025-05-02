@@ -9,10 +9,10 @@ interface IPhrase {
 @Component({
   selector: 'vd-hero-section',
   template: `
-    <section id="hero" class="space-y-4 px-0 py-12 lg:px-16 lg:py-16">
+    <section id="hero" aria-label="Hero Content" class="space-y-4 px-0 py-12 lg:px-16 lg:py-16">
       <h1 class="font-montserrat-alternates text-6 lg:text-12 font-medium xl:text-justify">
         hello, i’m <span class="font-bold text-orange-500">veysel demirel</span>, as a front-end
-        developer and ux/ui designer based in Türkiye.
+        developer and ui/ux designer based in Türkiye.
       </h1>
       <vd-typing-animation
         [subject]="'I'"

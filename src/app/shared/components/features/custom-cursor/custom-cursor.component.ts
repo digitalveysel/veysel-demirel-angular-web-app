@@ -16,8 +16,9 @@ import { animate, frame, motionValue } from 'motion';
   selector: 'vd-custom-cursor',
   template: `
     <span
-      #cursorEl
+      aria-hidden="true"
       class="pointer-events-none fixed top-0 left-0 z-50 h-8 w-8 -translate-1/2 rounded-full bg-orange-500 opacity-50 pointer-coarse:hidden"
+      #cursorEl
     ></span>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

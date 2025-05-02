@@ -31,13 +31,14 @@ export class CustomCursorComponent implements OnInit, AfterViewInit, OnDestroy {
   private hasFinePointer = false;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     @Inject(DOCUMENT) private document: Document,
   ) {}
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    this.hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const win = this.document.defaultView;
+    this.hasFinePointer = !!win?.matchMedia('(pointer: fine)').matches;
   }
 
   ngAfterViewInit(): void {

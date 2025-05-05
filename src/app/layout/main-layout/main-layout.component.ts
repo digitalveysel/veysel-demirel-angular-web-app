@@ -11,8 +11,8 @@ import { HeaderComponent } from '../header/header.component';
     <div class="w-full px-5 xl:px-64">
       <main>
         <router-outlet />
-        <vd-footer />
       </main>
+      <vd-footer />
     </div>
   </div>`,
 })

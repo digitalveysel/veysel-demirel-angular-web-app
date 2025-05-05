@@ -1,0 +1,84 @@
+@layer base {
+  body {
+    cursor: url('/cursors/default.svg'), default;
+  }
+
+  a,
+  a:hover,
+  a:focus {
+    cursor:
+      url('/cursors/pointer.svg') 8 8,
+      pointer;
+  }
+
+  button,
+  button:hover,
+  button:focus,
+  input[type='button'],
+  input[type='submit'],
+  input[type='reset'] {
+    cursor:
+      url('/cursors/pointer.svg') 8 8,
+      pointer;
+  }
+
+  select,
+  select:hover,
+  select:focus {
+    cursor:
+      url('/cursors/pointer.svg') 8 8,
+      pointer;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'],
+  input[type='file'] {
+    cursor:
+      url('/cursors/pointer.svg') 8 8,
+      pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    cursor: url('/cursors/text.svg'), text;
+  }
+
+  p {
+    cursor: url('/cursors/text.svg'), text;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='search'],
+  input[type='url'],
+  input[type='tel'],
+  input[type='number'],
+  textarea {
+    cursor: url('/cursors/text.svg'), text;
+  }
+
+  button:disabled,
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    cursor:
+      url('/cursors/not-allowed.svg') 8 8,
+      not-allowed;
+  }
+
+  abbr[title],
+  [title] {
+    cursor:
+      url('/cursors/help.svg') 8 8,
+      help;
+  }
+
+  [draggable='true'] {
+    cursor: url('/cursors/move.svg'), move;
+  }
+}

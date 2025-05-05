@@ -43,7 +43,7 @@ interface IArticle {
             <button
               role="tab"
               aria-selected="true"
-              class="font-semibold cursor-pointer {{ category?.isActive && 'text-orange-500' }}"
+              class="font-semibold  {{ category?.isActive && 'text-orange-500' }}"
             >
               {{ category.name }}
             </button>

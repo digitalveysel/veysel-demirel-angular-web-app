@@ -64,7 +64,7 @@ export class LoaderColsComponent {
       animate(
         this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
-        { ease: 'easeOut', duration: 0.6, delay: stagger(0.1, { startDelay: 0.1 }) },
+        { ease: 'easeOut', duration: 0.6, delay: stagger(0.1) },
       );
 
       // Backgrounds animations

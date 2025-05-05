@@ -16,7 +16,7 @@ import { animate, stagger } from 'motion';
     #container
   >
     <span
-      class="absolute -top-full left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-r from-neutral-900 via-neutral-100 to-neutral-900"
+      class="absolute -top-full left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-r from-neutral-100 via-neutral-100 to-neutral-900"
       #line
     ></span>
     <div class="flex flex-1">
@@ -58,7 +58,7 @@ export class LoaderColsComponent {
       );
 
       // Line animation
-      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.6 });
+      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.4 });
 
       // Borders animations
       animate(

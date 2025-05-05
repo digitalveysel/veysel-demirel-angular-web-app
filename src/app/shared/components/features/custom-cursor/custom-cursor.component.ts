@@ -8,17 +8,24 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT, NgClass } from '@angular/common';
 import { animate, frame, motionValue } from 'motion';
+import { AppStore } from '../../../../core/store/app.store';
 
 @Component({
   selector: 'vd-custom-cursor',
+  imports: [NgClass],
   template: `
     <span
       aria-hidden="true"
-      class="pointer-events-none fixed top-0 left-0 z-50 h-8 w-8 -translate-1/2 rounded-full bg-orange-500 opacity-50 pointer-coarse:hidden"
+      [ngClass]="{
+        'text-3 size-auto translate-0 rounded-none border border-orange-100 bg-orange-800 p-2 text-orange-100 opacity-100':
+          store.cursorLabel(),
+      }"
+      class="pointer-events-none fixed top-0 left-0 z-50 size-8 -translate-1/2 rounded-full bg-orange-500 opacity-25 pointer-coarse:hidden"
       #cursorEl
-    ></span>
+      >{{ store.cursorLabel() }}</span
+    >
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,6 +38,7 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
   private hasFinePointer = false;
 
   constructor(
+    public store: AppStore,
     @Inject(PLATFORM_ID) private platformId: object,
     @Inject(DOCUMENT) private document: Document,
   ) {}
@@ -48,7 +56,7 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
     this.addHoverListeners();
   }
 
-  private addHoverListeners() {
+  private addHoverListeners(): void {
     const linkElements = this.document.querySelectorAll('a, button');
     linkElements.forEach((el) => {
       el.addEventListener('mouseenter', () => this.onElementHover(true));
@@ -56,14 +64,10 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private onElementHover(isHovering: boolean) {
-    const el = this.cursorRef.nativeElement;
-
-    if (isHovering) {
-      animate(el, { opacity: '20%', scale: 2 });
-    } else {
-      animate(el, { opacity: '50%', scale: 1 });
-    }
+  private onElementHover(isHovering: boolean): void {
+    animate(this.cursorRef.nativeElement, {
+      scale: isHovering ? 2 : 1,
+    });
   }
 
   private initializeAnimation(): void {
@@ -77,7 +81,7 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
         animate(
           el,
           { x: this.pointerX.get() - originX, y: this.pointerY.get() - originY },
-          { type: 'spring', stiffness: 100, damping: 10 },
+          { type: 'spring', stiffness: 500, damping: 20 },
         );
       });
     };

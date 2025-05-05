@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TypingAnimationComponent } from '../../features/typing-animation/typing-animation/typing-animation.component';
+import { TypingAnimationComponent } from '../../features/typing-animation/typing-animation.component';
 
 interface IPhrase {
   verb: string;

@@ -16,11 +16,10 @@ interface IArticle {
 
 @Component({
   selector: 'vd-articles-section',
-  imports: [],
   template: `<section
     id="articles"
     aria-label="Articles Content"
-    class="space-y-6 pb-8 lg:space-y-12 lg:pb-16"
+    class="space-y-6 pb-8 lg:space-y-9 lg:pb-16"
   >
     <nav
       id="categories"
@@ -33,13 +32,13 @@ interface IArticle {
       <ul
         role="tablist"
         aria-orientation="horizontal"
-        class="flex w-full snap-x scroll-pl-4 gap-4 overflow-x-auto py-4 md:gap-6"
+        class="flex w-full snap-x scroll-pl-4 gap-4 overflow-x-auto py-4 md:scroll-pl-8 md:gap-6 md:py-8"
       >
         @for (category of categories; track category.id) {
           <li
             [id]="category.id"
             role="presentation"
-            class="shrink-0 snap-start first:pl-4 last:pr-4"
+            class="shrink-0 snap-start first:pl-4 last:pr-4 md:first:pl-8 md:last:pr-8"
           >
             <button
               role="tab"
@@ -55,7 +54,7 @@ interface IArticle {
         class="pointer-events-none absolute top-0 right-0 h-full w-10 bg-linear-to-r from-transparent to-neutral-800 select-none"
       ></span>
     </nav>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-12">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
       @for (article of articles; track article.id) {
         <article
           id="{{ article.id }}"
@@ -66,7 +65,7 @@ interface IArticle {
             >{{ article.category }}</span
           >
           <div class="space-y-2">
-            <h2 class="font-medium">{{ article.title }}</h2>
+            <h3 class="font-medium">{{ article.title }}</h3>
             <p class="text-3">{{ article.description }}</p>
             <a href="{{ article.link }}" class="text-3 font-bold">Read more</a>
           </div>

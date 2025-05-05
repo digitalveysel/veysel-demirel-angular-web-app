@@ -25,7 +25,7 @@ import { animate, stagger } from 'motion';
     </div>
     <div class="hidden max-w-3xl flex-3 md:flex">
       <div class="flex flex-1">
-        <span class="h-0 flex-1 bg-neutral-800" #bg></span>
+        <span class="h-full flex-1 bg-neutral-800" #bg></span>
         <span class="h-0 w-px bg-neutral-600" #border></span>
       </div>
       <div class="flex flex-1">
@@ -33,7 +33,7 @@ import { animate, stagger } from 'motion';
         <span class="h-0 w-px bg-neutral-600" #border></span>
       </div>
       <div class="flex flex-1">
-        <span class="h-0 flex-1 bg-neutral-800" #bg></span>
+        <span class="h-full flex-1 bg-neutral-800" #bg></span>
         <span class="h-0 w-px bg-neutral-600" #border></span>
       </div>
     </div>
@@ -54,7 +54,7 @@ export class LoaderColsComponent {
       animate(
         this.containerRef.nativeElement,
         { zIndex: -1 },
-        { ease: 'easeOut', duration: 1, delay: 1.4 },
+        { ease: 'easeOut', duration: 1, delay: 1 },
       );
 
       // Line animation
@@ -64,25 +64,15 @@ export class LoaderColsComponent {
       animate(
         this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
-        { ease: 'easeOut', duration: 0.6, delay: stagger(0.2, { startDelay: 0.2 }) },
+        { ease: 'easeOut', duration: 0.6, delay: stagger(0.1, { startDelay: 0.1 }) },
       );
 
       // Backgrounds animations
-      this.bgRefs.forEach((el, i) => {
-        if (i % 2 === 0) {
-          animate(
-            el.nativeElement,
-            { height: '0' },
-            { ease: 'easeOut', duration: 0.6, delay: i * 0.1 },
-          );
-        } else {
-          animate(
-            el.nativeElement,
-            { height: '100%' },
-            { ease: 'easeOut', duration: 0.6, delay: i * 0.2 },
-          );
-        }
-      });
+      animate(
+        this.bgRefs.map((el) => el.nativeElement),
+        { height: '0' },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.2) },
+      );
     });
   }
 }

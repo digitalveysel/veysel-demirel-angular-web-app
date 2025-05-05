@@ -14,14 +14,10 @@ import { SkillHighlightsSectionComponent } from '../../../shared/components/sect
     CoreSpecialitiesSectionComponent,
     SkillHighlightsSectionComponent,
   ],
-  template: `<div class="mx-auto max-w-7xl">
-    <main class="w-full px-5 xl:px-64">
-      <vd-hero-section />
-      <vd-articles-section />
-      <vd-tech-stack-section />
-      <vd-core-specialities-section />
-      <vd-skill-highlights-section />
-    </main>
-  </div>`,
+  template: `<vd-hero-section />
+    <vd-articles-section />
+    <vd-tech-stack-section />
+    <vd-core-specialities-section />
+    <vd-skill-highlights-section />`,
 })
 export class HomePageComponent {}

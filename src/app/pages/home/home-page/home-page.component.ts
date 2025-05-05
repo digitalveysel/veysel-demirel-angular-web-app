@@ -3,6 +3,7 @@ import { HeroSectionComponent } from '../../../shared/components/sections/hero-s
 import { ArticlesSectionComponent } from '../../../shared/components/sections/articles-section/articles-section.component';
 import { TechStackSectionComponent } from '../../../shared/components/sections/tect-stack-section/tech-stack-section.component';
 import { CoreSpecialitiesSectionComponent } from '../../../shared/components/sections/core-specialities-section/core-specialities-section.component';
+import { SkillHighlightsSectionComponent } from '../../../shared/components/sections/skill-highlights-section/skill-highlights-section.component';
 
 @Component({
   selector: 'vd-home-page',
@@ -11,6 +12,7 @@ import { CoreSpecialitiesSectionComponent } from '../../../shared/components/sec
     ArticlesSectionComponent,
     TechStackSectionComponent,
     CoreSpecialitiesSectionComponent,
+    SkillHighlightsSectionComponent,
   ],
   template: `<div class="mx-auto max-w-7xl">
     <main class="w-full px-5 xl:px-64">
@@ -18,6 +20,7 @@ import { CoreSpecialitiesSectionComponent } from '../../../shared/components/sec
       <vd-articles-section />
       <vd-tech-stack-section />
       <vd-core-specialities-section />
+      <vd-skill-highlights-section />
     </main>
   </div>`,
 })

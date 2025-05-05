@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { IconService } from '../../../../core/services/icon/icon.service';
 import { take } from 'rxjs';
-import { SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'vd-icon',
@@ -10,18 +10,34 @@ import { SafeHtml } from '@angular/platform-browser';
 })
 export class IconComponent implements OnInit {
   @Input() className = '';
-  @Input() name = '';
+  @Input() name = 'widgets';
+  @Input() size = '';
 
   svg = signal<SafeHtml>('');
 
-  constructor(private iconService: IconService) {}
+  constructor(
+    private iconService: IconService,
+    private sanitizer: DomSanitizer,
+  ) {}
 
   ngOnInit(): void {
     this.iconService
       .getSvg(this.name)
       .pipe(take(1))
-      .subscribe((svg) => {
-        this.svg.set(svg);
+      .subscribe((svgStr) => {
+        if (this.size) {
+          svgStr = this.updateSvgDimensions(svgStr, this.size);
+        }
+
+        this.svg.set(this.sanitizer.bypassSecurityTrustHtml(svgStr));
       });
+  }
+
+  private updateSvgDimensions(svg: string, size: string): string {
+    return svg.replace(/<svg[^>]*>/, (match) => {
+      return match
+        .replace(/width="[^"]*"/, `width="${size}"`)
+        .replace(/height="[^"]*"/, `height="${size}"`);
+    });
   }
 }

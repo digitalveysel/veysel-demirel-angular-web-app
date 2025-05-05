@@ -32,7 +32,7 @@ interface IArticle {
       <ul
         role="tablist"
         aria-orientation="horizontal"
-        class="flex w-full snap-x scroll-pl-4 gap-4 overflow-x-auto py-4 md:scroll-pl-8 md:gap-6 md:py-8"
+        class="scroll-hide flex w-full touch-pan-x snap-x snap-mandatory scroll-pl-4 gap-4 overflow-x-auto py-4 md:scroll-pl-8 md:gap-6 md:py-8"
       >
         @for (category of categories; track category.id) {
           <li
@@ -51,7 +51,7 @@ interface IArticle {
         }
       </ul>
       <span
-        class="pointer-events-none absolute top-0 right-0 h-full w-10 bg-linear-to-r from-transparent to-neutral-800 select-none"
+        class="pointer-events-none absolute top-0 right-0 h-full w-20 bg-linear-to-r from-transparent to-neutral-800 select-none"
       ></span>
     </nav>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
@@ -77,8 +77,6 @@ interface IArticle {
 export class ArticlesSectionComponent {
   categories: ICategory[] = [
     { id: 'all', name: 'All', isActive: true },
-    { id: 'html', name: 'HTML' },
-    { id: 'css', name: 'CSS' },
     { id: 'tailwindCSS', name: 'Tailwind CSS' },
     { id: 'javascript', name: 'JavaScript' },
     { id: 'typescript', name: 'TypeScript' },

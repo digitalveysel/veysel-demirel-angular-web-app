@@ -11,7 +11,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
   imports: [IconComponent, AnimationDirective],
   template: `<button
     id="themeButton"
-    class="relative flex items-center justify-center p-1"
+    class="flex items-center justify-center p-1"
     (click)="onClick()"
   >
     @switch (store.theme()) {

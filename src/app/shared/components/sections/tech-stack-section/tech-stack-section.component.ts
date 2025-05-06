@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IconComponent } from '../../ui/icon/icon.component';
 import { NgClass } from '@angular/common';
-import { CursorLabelDirective } from '../../../directives/cursor-label.directive';
+import { CursorLabelDirective } from '../../../directives/cursor-label/cursor-label.directive';
 
 interface ITechIcon {
   icon: string;

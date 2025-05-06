@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { AppStore } from '../../core/store/app.store';
+import { AppStore } from '../../../core/store/app.store';
 
 @Directive({
   selector: '[vdCursorLabel]',

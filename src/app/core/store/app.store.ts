@@ -1,33 +1,37 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { ITheme, IThemeValues } from '../models/theme.model';
 
-interface AppState {
+interface IAppState {
   cursorLabel: string;
-  lightMode: boolean;
+  theme: ITheme;
+  isMuted: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AppStore {
-  private _state = signal<AppState>({
+  private _state = signal<IAppState>({
     cursorLabel: '',
-    lightMode: false,
+    theme: IThemeValues.DARK,
+    isMuted: false,
   });
 
   readonly cursorLabel = computed(() => this._state().cursorLabel);
-  readonly lightMode = computed(() => this._state().lightMode);
+  readonly theme = computed(() => this._state().theme);
+  readonly isMuted = computed(() => this._state().isMuted);
 
-  setCursorLabel(label: string) {
-    this._state.update((s) => ({ ...s, cursorLabel: label }));
+  setCursorLabel(value: string) {
+    this._state.update((s) => ({ ...s, cursorLabel: value }));
   }
 
   clearCursorLabel() {
     this._state.update((s) => ({ ...s, cursorLabel: '' }));
   }
 
-  toggleLightMode() {
-    this._state.update((s) => ({ ...s, lightMode: !s.lightMode }));
+  setTheme(value: ITheme) {
+    this._state.update((s) => ({ ...s, theme: value }));
   }
 
-  setLightMode(enabled: boolean) {
-    this._state.update((s) => ({ ...s, lightMode: enabled }));
+  setIsMuted(value: boolean) {
+    this._state.update((s) => ({ ...s, isMuted: value }));
   }
 }

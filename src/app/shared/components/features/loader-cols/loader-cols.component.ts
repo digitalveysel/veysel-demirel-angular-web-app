@@ -12,7 +12,7 @@ import { animate, stagger } from 'motion';
   selector: 'vd-loader-cols',
   template: ` <div
     aria-hidden="true"
-    class="pointer-events-none fixed inset-0 z-9 flex select-none"
+    class="pointer-events-none fixed inset-0 z-8 flex select-none"
     #container
   >
     <span

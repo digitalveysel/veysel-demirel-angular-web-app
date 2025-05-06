@@ -22,7 +22,7 @@ import { AppStore } from '../../../../core/store/app.store';
         'text-3 size-auto translate-1/4 rounded-none border border-orange-100 bg-orange-800 p-2 text-orange-100 opacity-100':
           store.cursorLabel(),
       }"
-      class="pointer-events-none fixed top-0 left-0 z-50 size-10 -translate-1/2 rounded-full bg-orange-500 opacity-25 pointer-coarse:hidden"
+      class="pointer-events-none fixed top-0 left-0 z-9 size-10 -translate-1/2 rounded-full bg-orange-500 opacity-25 pointer-coarse:hidden"
       #cursorEl
       >{{ store.cursorLabel() }}</span
     >

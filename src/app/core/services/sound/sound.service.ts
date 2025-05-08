@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { afterNextRender, Injectable } from '@angular/core';
 import { AppStore } from '../../store/app.store';
 
 @Injectable({
@@ -7,7 +7,19 @@ import { AppStore } from '../../store/app.store';
 export class SoundService {
   private cache: Record<string, HTMLAudioElement> = {};
 
-  constructor(private store: AppStore) {}
+  constructor(private store: AppStore) {
+    afterNextRender(() => {
+      this.checkSound();
+    });
+  }
+
+  private checkSound(): void {
+    const lsValue = localStorage.getItem('isMuted');
+
+    if (lsValue) {
+      this.setIsMuted(JSON.parse(lsValue));
+    }
+  }
 
   setIsMuted(isMuted: boolean): void {
     this.store.setIsMuted(isMuted);
@@ -17,21 +29,30 @@ export class SoundService {
   }
 
   toggleMuted(): void {
+    localStorage.setItem('isMuted', JSON.stringify(!this.store.isMuted()));
     this.setIsMuted(!this.store.isMuted());
   }
 
-  play(name: string): void {
-    if (this.store.isMuted()) {
+  async play(name: string, skipMutedCheck = false): Promise<void> {
+    if (this.store.isMuted() && !skipMutedCheck) {
       return;
     }
 
-    if (!this.cache[name]) {
-      const audio = new Audio(`/sounds/${name}.mp3`);
+    let audio: HTMLAudioElement | undefined = this.cache[name];
+
+    if (!audio) {
+      audio = new Audio(`/sounds/${name}.mp3`);
       this.cache[name] = audio;
     }
 
-    this.cache[name].currentTime = 0;
-    this.cache[name].play();
+    audio.currentTime = 0;
+
+    try {
+      await audio.play();
+    } catch (err) {
+      console.error(`Failed to play sound: ${name}`, err);
+      throw err;
+    }
   }
 
   stop(name: string): void {

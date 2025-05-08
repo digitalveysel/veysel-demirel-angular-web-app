@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 
 interface ICategory {
   id: string;
@@ -16,10 +17,12 @@ interface IArticle {
 
 @Component({
   selector: 'vd-articles-section',
+  imports: [ScrollSpyDirective],
   template: `<section
-    id="articles"
+    id="articlesSection"
     aria-label="Articles Content"
-    class="space-y-6 pb-8 lg:space-y-9 lg:pb-16"
+    class="space-y-6 pb-12 lg:space-y-9 lg:pb-16"
+    vdScrollSpy
   >
     <nav
       id="categories"

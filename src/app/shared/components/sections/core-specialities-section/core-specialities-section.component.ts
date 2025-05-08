@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IconComponent } from '../../ui/icon/icon.component';
+import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 
 interface ISpeciality {
   icon: string;
@@ -9,11 +10,12 @@ interface ISpeciality {
 
 @Component({
   selector: 'vd-core-specialities-section',
-  imports: [IconComponent],
+  imports: [IconComponent, ScrollSpyDirective],
   template: `<section
     id="coreSpecialities"
     aria-label="Core Specialities Content"
-    class="space-y-4 py-16"
+    class="space-y-4 py-12 lg:pb-16"
+    vdScrollSpy
   >
     <h2 class="font-montserrat-alternates text-6 font-semibold xl:pl-4">Core specialities</h2>
     <div class="grid grid-cols-1 gap-9 md:grid-cols-2">

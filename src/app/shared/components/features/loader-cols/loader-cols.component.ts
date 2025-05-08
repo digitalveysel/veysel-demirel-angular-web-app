@@ -60,14 +60,14 @@ export class LoaderColsComponent {
       animate(
         this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
-        { ease: 'easeOut', duration: 0.2, delay: stagger(0.2, { startDelay: 0.8 }) },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.1, { startDelay: 0.8 }) },
       );
 
       // Backgrounds animations
       animate(
         this.bgRefs.map((el) => el.nativeElement),
         { height: '0' },
-        { ease: 'easeOut', duration: 0.2, delay: stagger(0.2) },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.1) },
       );
     });
   }

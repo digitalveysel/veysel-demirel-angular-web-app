@@ -5,7 +5,8 @@ import { RouterLink } from '@angular/router';
   selector: 'vd-logo',
   imports: [RouterLink],
   template: `<a
-    routerLink="/"
+    routerLink=""
+    fragment="hero"
     id="logo"
     class="text-5 flex items-center gap-x-1 font-bold line-through"
     role="img"

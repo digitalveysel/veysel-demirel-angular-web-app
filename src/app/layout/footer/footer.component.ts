@@ -5,7 +5,7 @@ import { SoundButtonComponent } from '../../shared/components/ui/sound-button/so
 @Component({
   selector: 'vd-footer',
   imports: [IconComponent, SoundButtonComponent],
-  template: `<footer class="pb-16">
+  template: `<footer class="pb-12 md:-ml-px lg:pb-16">
     <ul class="flex justify-center gap-x-4 border border-neutral-600 bg-neutral-800 p-2 md:p-6">
       <li>
         <vd-sound-button />

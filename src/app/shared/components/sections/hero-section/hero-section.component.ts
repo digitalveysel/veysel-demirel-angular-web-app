@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TypingAnimationComponent } from '../../features/typing-animation/typing-animation.component';
+import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 
 interface IPhrase {
   verb: string;
@@ -8,8 +9,14 @@ interface IPhrase {
 
 @Component({
   selector: 'vd-hero-section',
+  imports: [TypingAnimationComponent, ScrollSpyDirective],
   template: `
-    <section id="hero" aria-label="Hero Content" class="space-y-4 px-0 py-12 lg:px-16 lg:py-16">
+    <section
+      id="hero"
+      aria-label="Hero Content"
+      class="space-y-4 px-0 py-12 lg:px-16 lg:py-16"
+      vdScrollSpy
+    >
       <h1 class="font-montserrat-alternates text-6 lg:text-12 font-medium xl:text-justify">
         hello, i’m <span class="font-bold text-orange-500">veysel demirel</span>, as a front-end
         developer and ui/ux designer based in Türkiye.
@@ -21,7 +28,6 @@ interface IPhrase {
       />
     </section>
   `,
-  imports: [TypingAnimationComponent],
 })
 export class HeroSectionComponent {
   private phrases: IPhrase[] = [

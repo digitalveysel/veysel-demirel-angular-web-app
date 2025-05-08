@@ -5,6 +5,8 @@ interface IAppState {
   cursorLabel: string;
   theme: ITheme;
   isMuted: boolean;
+  isMenuOpen: boolean;
+  activeSection: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -13,11 +15,15 @@ export class AppStore {
     cursorLabel: '',
     theme: IThemeValues.DARK,
     isMuted: false,
+    isMenuOpen: false,
+    activeSection: '#heroSection',
   });
 
   readonly cursorLabel = computed(() => this._state().cursorLabel);
   readonly theme = computed(() => this._state().theme);
   readonly isMuted = computed(() => this._state().isMuted);
+  readonly isMenuOpen = computed(() => this._state().isMenuOpen);
+  readonly activeSection = computed(() => this._state().activeSection);
 
   setCursorLabel(value: string): void {
     this._state.update((s) => ({ ...s, cursorLabel: value }));
@@ -33,5 +39,13 @@ export class AppStore {
 
   setIsMuted(value: boolean): void {
     this._state.update((s) => ({ ...s, isMuted: value }));
+  }
+
+  setIsMenuOpen(value: boolean): void {
+    this._state.update((s) => ({ ...s, isMenuOpen: value }));
+  }
+
+  setActiveSection(value: string): void {
+    this._state.update((s) => ({ ...s, activeSection: value }));
   }
 }

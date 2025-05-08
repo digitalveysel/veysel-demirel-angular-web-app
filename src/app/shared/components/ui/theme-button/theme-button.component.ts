@@ -11,14 +11,15 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
   imports: [IconComponent, AnimationDirective],
   template: `<button
     id="themeButton"
-    class="flex items-center justify-center p-1"
+    aria-label="Toggle Theme"
+    class="flex items-center justify-center p-2"
     (click)="onClick()"
   >
     @switch (store.theme()) {
       @case (themeValue.DARK) {
         <vd-icon
           name="light-mode"
-          size="32"
+          size="24"
           [vdAnimation]="{
             keyframes: { scale: [0, 1] },
           }"
@@ -27,7 +28,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
       @case (themeValue.LIGHT) {
         <vd-icon
           name="dark-mode"
-          size="32"
+          size="24"
           [vdAnimation]="{
             keyframes: { scale: [0, 1] },
           }"
@@ -46,7 +47,7 @@ export class ThemeButtonComponent {
   ) {}
 
   onClick(): void {
-    this.themeService.toggle();
     this.soundService.play('click');
+    this.themeService.toggle();
   }
 }

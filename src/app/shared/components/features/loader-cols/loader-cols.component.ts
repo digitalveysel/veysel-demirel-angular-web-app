@@ -51,20 +51,16 @@ export class LoaderColsComponent {
   constructor() {
     afterNextRender(() => {
       // Container animation
-      animate(
-        this.containerRef.nativeElement,
-        { zIndex: -1 },
-        { ease: 'easeOut', duration: 1, delay: 1 },
-      );
+      animate(this.containerRef.nativeElement, { zIndex: -1 }, { ease: 'easeOut', delay: 0.8 });
 
       // Line animation
-      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.4 });
+      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.8 });
 
       // Borders animations
       animate(
         this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
-        { ease: 'easeOut', duration: 0.6, delay: stagger(0.1) },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.2, { startDelay: 0.8 }) },
       );
 
       // Backgrounds animations

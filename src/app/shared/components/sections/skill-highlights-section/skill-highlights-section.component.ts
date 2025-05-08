@@ -15,7 +15,7 @@ import { IconComponent } from '../../ui/icon/icon.component';
         @for (item of skillHighlights; track item) {
           <li class="flex gap-x-3">
             <vd-icon name="check" size="24" className="text-orange-500" />
-            <span>{{ item }}</span>
+            <p>{{ item }}</p>
           </li>
         }
       </ul>

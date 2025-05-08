@@ -3,20 +3,22 @@ import { LogoComponent } from '../../shared/components/ui/logo/logo.component';
 import { IconComponent } from '../../shared/components/ui/icon/icon.component';
 import { ThemeButtonComponent } from '../../shared/components/ui/theme-button/theme-button.component';
 import { isPlatformBrowser } from '@angular/common';
+import { SoundButtonComponent } from '../../shared/components/ui/sound-button/sound-button.component';
 
 @Component({
   selector: 'vd-header',
-  imports: [LogoComponent, IconComponent, ThemeButtonComponent],
+  imports: [LogoComponent, IconComponent, ThemeButtonComponent, SoundButtonComponent],
   template: `<header
-    class="sticky top-0 flex items-center justify-center gap-x-2 px-5  lg:gap-x-4 lg:px-10 z-8 {{
-      isSticky() ? 'bg-neutral-800 py-3 lg:py-8' : 'bg-transparent py-5 lg:py-10'
+    class="sticky top-0 flex items-center justify-center gap-x-2 z-8 xl:gap-x-4 px-5 py-3 xl:px-10 xl:py-5 {{
+      isSticky() ? 'bg-neutral-800' : 'bg-transparent'
     }}"
   >
     <vd-logo />
     <div class="flex flex-1 items-center justify-between lg:justify-end">
+      <vd-sound-button class="hidden lg:block" />
       <vd-theme-button />
-      <button id="menuButton" class="flex items-center justify-center lg:hidden">
-        <vd-icon name="menu" size="40" />
+      <button id="menuButton" class="flex items-center justify-center p-1 lg:hidden">
+        <vd-icon name="menu" size="32" />
       </button>
     </div>
   </header>`,

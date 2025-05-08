@@ -19,19 +19,19 @@ export class AppStore {
   readonly theme = computed(() => this._state().theme);
   readonly isMuted = computed(() => this._state().isMuted);
 
-  setCursorLabel(value: string) {
+  setCursorLabel(value: string): void {
     this._state.update((s) => ({ ...s, cursorLabel: value }));
   }
 
-  clearCursorLabel() {
+  clearCursorLabel(): void {
     this._state.update((s) => ({ ...s, cursorLabel: '' }));
   }
 
-  setTheme(value: ITheme) {
+  setTheme(value: ITheme): void {
     this._state.update((s) => ({ ...s, theme: value }));
   }
 
-  setIsMuted(value: boolean) {
+  setIsMuted(value: boolean): void {
     this._state.update((s) => ({ ...s, isMuted: value }));
   }
 }

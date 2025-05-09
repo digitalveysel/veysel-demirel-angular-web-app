@@ -1,7 +1,7 @@
-import { afterNextRender, ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { first } from 'rxjs';
+import { afterNextRender, ApplicationRef, Injectable } from '@angular/core';
 import { AppStore } from '../../store/app.store';
 import { Location } from '@angular/common';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,6 @@ export class ScrollSpyService {
     private store: AppStore,
     private location: Location,
     private appRef: ApplicationRef,
-    @Inject(PLATFORM_ID) private platformId: object,
   ) {
     afterNextRender(() => {
       this.checkApp();
@@ -36,7 +35,7 @@ export class ScrollSpyService {
           }
         });
       },
-      { threshold: 1 },
+      { threshold: 0.8 },
     );
 
     this.sections.forEach((section) => {

@@ -19,7 +19,7 @@ interface IArticle {
   selector: 'vd-articles-section',
   imports: [ScrollSpyDirective],
   template: `<section
-    id="articlesSection"
+    id="articles"
     aria-label="Articles Content"
     class="space-y-6 pb-12 lg:space-y-9 lg:pb-16"
     vdScrollSpy

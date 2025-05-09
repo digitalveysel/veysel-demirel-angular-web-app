@@ -10,7 +10,7 @@ import { SoundService } from '../../../../core/services/sound/sound.service';
   template: `<button
     id="soundButton"
     aria-label="Toggle Sound"
-    class="flex items-center justify-center p-2"
+    class="flex size-10 items-center justify-center p-2"
     (click)="onClick()"
   >
     @if (store.isMuted()) {

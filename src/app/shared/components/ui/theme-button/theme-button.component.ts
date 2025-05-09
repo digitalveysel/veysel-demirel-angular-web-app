@@ -12,11 +12,11 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
   template: `<button
     id="themeButton"
     aria-label="Toggle Theme"
-    class="flex items-center justify-center p-2"
+    class="flex size-10 items-center justify-center p-2"
     (click)="onClick()"
   >
     @switch (store.theme()) {
-      @case (themeValue.DARK) {
+      @case (themeValues.DARK) {
         <vd-icon
           name="light-mode"
           size="24"
@@ -25,7 +25,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
           }"
         />
       }
-      @case (themeValue.LIGHT) {
+      @case (themeValues.LIGHT) {
         <vd-icon
           name="dark-mode"
           size="24"
@@ -38,7 +38,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
   </button>`,
 })
 export class ThemeButtonComponent {
-  themeValue = IThemeValues;
+  themeValues = IThemeValues;
 
   constructor(
     public store: AppStore,

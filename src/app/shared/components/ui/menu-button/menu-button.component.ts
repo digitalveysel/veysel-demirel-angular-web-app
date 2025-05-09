@@ -10,7 +10,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
   template: `<button
     id="menuButton"
     aria-label="Toggle Menu"
-    class="flex items-center justify-center p-1"
+    class="flex size-10 items-center justify-center p-1"
     (click)="onClick()"
   >
     @if (store.isMenuOpen()) {

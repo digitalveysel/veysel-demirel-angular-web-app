@@ -2,11 +2,6 @@ import { Component } from '@angular/core';
 import { TypingAnimationComponent } from '../../features/typing-animation/typing-animation.component';
 import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 
-interface IPhrase {
-  verb: string;
-  desc: string;
-}
-
 @Component({
   selector: 'vd-hero-section',
   imports: [TypingAnimationComponent, ScrollSpyDirective],
@@ -29,10 +24,4 @@ interface IPhrase {
     </section>
   `,
 })
-export class HeroSectionComponent {
-  private phrases: IPhrase[] = [
-    { verb: 'develop ', desc: 'impressive web applications' },
-    { verb: 'design ', desc: 'creative web sites' },
-    { verb: 'create ', desc: 'useful design systems' },
-  ];
-}
+export class HeroSectionComponent {}

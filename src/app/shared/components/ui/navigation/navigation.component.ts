@@ -17,7 +17,7 @@ interface IMenuItem {
     class="fixed top-16 right-0 left-0 bg-neutral-800 lg:static lg:bg-transparent"
   >
     <ul class="flex flex-col gap-y-4 p-5 lg:flex-row lg:p-0">
-      @for (item of menuItems; track item.link) {
+      @for (item of navItems; track item.link) {
         <li>
           <a
             routerLink=""
@@ -37,7 +37,7 @@ interface IMenuItem {
   </nav>`,
 })
 export class NavigationComponent {
-  menuItems: IMenuItem[] = [
+  navItems: IMenuItem[] = [
     {
       link: 'hero',
       name: 'hello',

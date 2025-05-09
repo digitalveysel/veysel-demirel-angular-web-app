@@ -9,11 +9,11 @@ export class SoundService {
 
   constructor(private store: AppStore) {
     afterNextRender(() => {
-      this.checkSound();
+      this.checkIsMuted();
     });
   }
 
-  private checkSound(): void {
+  private checkIsMuted(): void {
     const lsValue = localStorage.getItem('isMuted');
 
     if (lsValue) {

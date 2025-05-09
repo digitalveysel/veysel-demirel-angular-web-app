@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import { IconComponent } from '../../ui/icon/icon.component';
 import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
-
-interface ISpeciality {
-  icon: string;
-  title: string;
-  description: string;
-}
+import { ISpeciality } from '../../../../core/models/speciality.model';
+import { SpecialityCardComponent } from '../../ui/speciality-card/speciality-card.component';
 
 @Component({
   selector: 'vd-core-specialities-section',
-  imports: [IconComponent, ScrollSpyDirective],
+  imports: [ScrollSpyDirective, SpecialityCardComponent],
   template: `<section
     id="coreSpecialities"
     aria-label="Core Specialities Content"
@@ -20,13 +15,7 @@ interface ISpeciality {
     <h2 class="font-montserrat-alternates text-6 font-semibold xl:pl-4">Core specialities</h2>
     <div class="grid grid-cols-1 gap-9 md:grid-cols-2">
       @for (speciality of specialities; track speciality.icon) {
-        <div class="flex flex-col gap-y-3 border border-neutral-600 bg-neutral-800 p-8">
-          <vd-icon name="{{ speciality.icon }}" className="text-orange-500" size="48" />
-          <div class="space-y-2">
-            <h3>{{ speciality.title }}</h3>
-            <p class="text-3">{{ speciality.description }}</p>
-          </div>
-        </div>
+        <vd-speciality-card [speciality]="speciality" />
       }
     </div>
   </section>`,

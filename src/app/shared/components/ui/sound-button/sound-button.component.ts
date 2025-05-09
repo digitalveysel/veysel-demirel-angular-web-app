@@ -39,7 +39,10 @@ export class SoundButtonComponent {
   ) {}
 
   async onClick(): Promise<void> {
-    await this.soundService.play('sound-on', true);
+    if (this.store.isMuted()) {
+      await this.soundService.play('sound-on', true);
+    }
+
     this.soundService.toggleMuted();
   }
 }

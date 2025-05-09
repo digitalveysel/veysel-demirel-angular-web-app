@@ -22,7 +22,7 @@ interface IMenuItem {
           <a
             routerLink=""
             [fragment]="item.link"
-            class="block border border-neutral-600 px-3 py-2 lg:px-4 lg:border-none {{
+            class="block border border-neutral-600 px-3 py-2 lg:px-3 lg:border-none {{
               store.activeSection() === item.link
                 ? 'text-neutral-100 font-bold'
                 : 'text-neutral-200'

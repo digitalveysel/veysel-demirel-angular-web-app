@@ -11,41 +11,41 @@ interface IAppState {
 
 @Injectable({ providedIn: 'root' })
 export class AppStore {
-  private _state = signal<IAppState>({
+  private $state = signal<IAppState>({
     cursorLabel: '',
     theme: IThemeValues.DARK,
     isMuted: false,
     isMenuOpen: false,
-    activeSection: '#heroSection',
+    activeSection: '#hero',
   });
 
-  readonly cursorLabel = computed(() => this._state().cursorLabel);
-  readonly theme = computed(() => this._state().theme);
-  readonly isMuted = computed(() => this._state().isMuted);
-  readonly isMenuOpen = computed(() => this._state().isMenuOpen);
-  readonly activeSection = computed(() => this._state().activeSection);
+  readonly cursorLabel = computed(() => this.$state().cursorLabel);
+  readonly theme = computed(() => this.$state().theme);
+  readonly isMuted = computed(() => this.$state().isMuted);
+  readonly isMenuOpen = computed(() => this.$state().isMenuOpen);
+  readonly activeSection = computed(() => this.$state().activeSection);
 
   setCursorLabel(value: string): void {
-    this._state.update((s) => ({ ...s, cursorLabel: value }));
+    this.$state.update((s) => ({ ...s, cursorLabel: value }));
   }
 
   clearCursorLabel(): void {
-    this._state.update((s) => ({ ...s, cursorLabel: '' }));
+    this.$state.update((s) => ({ ...s, cursorLabel: '' }));
   }
 
   setTheme(value: ITheme): void {
-    this._state.update((s) => ({ ...s, theme: value }));
+    this.$state.update((s) => ({ ...s, theme: value }));
   }
 
   setIsMuted(value: boolean): void {
-    this._state.update((s) => ({ ...s, isMuted: value }));
+    this.$state.update((s) => ({ ...s, isMuted: value }));
   }
 
   setIsMenuOpen(value: boolean): void {
-    this._state.update((s) => ({ ...s, isMenuOpen: value }));
+    this.$state.update((s) => ({ ...s, isMenuOpen: value }));
   }
 
   setActiveSection(value: string): void {
-    this._state.update((s) => ({ ...s, activeSection: value }));
+    this.$state.update((s) => ({ ...s, activeSection: value }));
   }
 }

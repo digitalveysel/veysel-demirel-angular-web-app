@@ -23,21 +23,25 @@ import { SpecialityCardComponent } from '../../ui/speciality-card/speciality-car
 export class CoreSpecialitiesSectionComponent {
   specialities: ISpeciality[] = [
     {
+      id: 'modularUI',
       icon: 'widgets',
       title: 'Modular UI',
       description: 'Break your interface into self-contained modules for effortless scaling.',
     },
     {
+      id: 'universalAccess',
       icon: 'accessibility',
       title: 'Universal Access',
       description: 'Build interfaces that welcome every ability, device and context.',
     },
     {
+      id: 'seamlessJourneys',
       icon: 'flight-takeoff',
       title: 'Seamless Journeys',
       description: 'Map and optimise user flows for effortless discovery and action.',
     },
     {
+      id: 'velocityEngineering',
       icon: 'rocket-launch',
       title: 'Velocity Engineering',
       description: 'Optimise performance and load times for lightning-fast experiences.',

@@ -15,6 +15,7 @@ import { ISpeciality } from '../../../../core/models/speciality.model';
 })
 export class SpecialityCardComponent {
   @Input() speciality: ISpeciality = {
+    id: 'modularUI',
     icon: 'widgets',
     title: 'Modular UI',
     description: 'Break your interface into self-contained modules for effortless scaling.',

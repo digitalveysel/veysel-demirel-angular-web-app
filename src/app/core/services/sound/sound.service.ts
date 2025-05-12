@@ -22,6 +22,7 @@ export class SoundService {
   }
 
   setIsMuted(isMuted: boolean): void {
+    localStorage.setItem('isMuted', JSON.stringify(isMuted));
     this.store.setIsMuted(isMuted);
     Object.values(this.cache).forEach((audio) => {
       audio.volume = isMuted ? 0 : 1;
@@ -29,7 +30,6 @@ export class SoundService {
   }
 
   toggleMuted(): void {
-    localStorage.setItem('isMuted', JSON.stringify(!this.store.isMuted()));
     this.setIsMuted(!this.store.isMuted());
   }
 
@@ -50,7 +50,7 @@ export class SoundService {
     try {
       await audio.play();
     } catch (err) {
-      console.error(`Failed to play sound: ${name}`, err);
+      console.error(`SoundService: Failed to play sound: ${name}`, err);
       throw err;
     }
   }

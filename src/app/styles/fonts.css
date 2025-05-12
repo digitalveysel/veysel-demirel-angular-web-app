@@ -1,6 +1,17 @@
 /* Montserrat Font Family */
 @font-face {
   font-family: 'Montserrat';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Montserrat'),
+    url('/fonts/montserrat-regular.woff2') format('woff2'),
+    url('/fonts/montserrat-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Montserrat';
   font-weight: 500;
   font-style: normal;
   font-display: swap;

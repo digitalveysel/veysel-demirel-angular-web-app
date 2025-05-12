@@ -6,17 +6,17 @@ import { IArticle } from '../../../core/models/article.model';
   selector: 'vd-article-card',
   imports: [BadgeComponent],
   template: `<article
-    id="{{ article.id }}"
+    id="{{ vdArticle.id }}"
     class="flex flex-col gap-4 border border-neutral-600 bg-neutral-800 p-6"
   >
-    <vd-badge [text]="article.category" />
+    <vd-badge [vdText]="vdArticle.category" />
     <div class="space-y-2">
-      <h3 class="font-semibold">{{ article.title }}</h3>
-      <p class="text-14px">{{ article.description }}</p>
-      <a href="{{ article.link }}" class="text-14px font-bold"> Read more </a>
+      <h3 class="font-semibold">{{ vdArticle.title }}</h3>
+      <p class="text-14px">{{ vdArticle.description }}</p>
+      <a href="{{ vdArticle.link }}" class="text-14px font-bold"> Read more </a>
     </div>
   </article>`,
 })
 export class ArticleCardComponent {
-  @Input({ required: true }) article!: IArticle;
+  @Input({ required: true }) vdArticle!: IArticle;
 }

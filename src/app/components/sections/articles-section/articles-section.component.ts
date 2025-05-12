@@ -14,10 +14,10 @@ import { IArticle } from '../../../core/models/article.model';
     class="flex flex-col gap-y-6 pb-12 lg:gap-y-9 lg:pb-16"
     vdScrollSpy
   >
-    <vd-categories [categories]="categories" />
+    <vd-categories [vdCategories]="categories" />
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
       @for (article of articles; track article.id) {
-        <vd-article-card [article]="article" />
+        <vd-article-card [vdArticle]="article" />
       }
     </div>
   </section>`,

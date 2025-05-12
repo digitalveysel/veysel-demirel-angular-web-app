@@ -5,13 +5,13 @@ import { AppStore } from '../../core/store/app.store';
   selector: '[vdCursorLabel]',
 })
 export class CursorLabelDirective {
-  @Input('vdCursorLabel') labelText = '';
+  @Input('vdCursorLabel') vdLabelText = '';
 
   constructor(private store: AppStore) {}
 
   @HostListener('mouseenter')
   onEnter(): void {
-    this.store.setCursorLabel(this.labelText);
+    this.store.setCursorLabel(this.vdLabelText);
   }
 
   @HostListener('mouseleave')

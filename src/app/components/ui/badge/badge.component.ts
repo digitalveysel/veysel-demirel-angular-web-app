@@ -5,9 +5,9 @@ import { Component, Input } from '@angular/core';
   template: `<span
     class="text-10px border border-orange-100 bg-orange-800 px-2 py-1 font-semibold text-orange-100"
   >
-    {{ text }}
+    {{ vdText }}
   </span>`,
 })
 export class BadgeComponent {
-  @Input({ required: true }) text = 'VdBadge';
+  @Input({ required: true }) vdText = 'VdBadge';
 }

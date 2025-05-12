@@ -15,7 +15,7 @@ import { ISpeciality } from '../../../core/models/speciality.model';
     <h2 class="font-montserrat-alternates text-24px font-semibold xl:pl-4">Core specialities</h2>
     <div class="grid grid-cols-1 gap-9 md:grid-cols-2">
       @for (speciality of specialities; track speciality.id) {
-        <vd-speciality-card [speciality]="speciality" />
+        <vd-speciality-card [vdSpeciality]="speciality" />
       }
     </div>
   </section>`,

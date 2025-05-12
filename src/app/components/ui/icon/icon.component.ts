@@ -9,8 +9,8 @@ import { IconService } from '../../../core/services/icon/icon.service';
   template: `<div role="img" [innerHTML]="svg()" [class]="vdClass"></div>`,
 })
 export class IconComponent implements OnInit {
-  @Input() name = 'widgets';
-  @Input() size = '';
+  @Input() vdName = 'widgets';
+  @Input() vdSize = '';
   @Input() vdClass = '';
 
   svg = signal<SafeHtml>('');
@@ -22,11 +22,11 @@ export class IconComponent implements OnInit {
 
   ngOnInit(): void {
     this.iconService
-      .getSvg(this.name)
+      .getSvg(this.vdName)
       .pipe(take(1))
       .subscribe((svgStr) => {
-        if (this.size) {
-          svgStr = this.updateSvgDimensions(svgStr, this.size);
+        if (this.vdSize) {
+          svgStr = this.updateSvgDimensions(svgStr, this.vdSize);
         }
 
         this.svg.set(this.sanitizer.bypassSecurityTrustHtml(svgStr));

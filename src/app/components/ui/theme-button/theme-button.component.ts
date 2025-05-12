@@ -18,8 +18,8 @@ import { ThemeService } from '../../../core/services/theme/theme.service';
     @switch (store.theme()) {
       @case (themeValues.DARK) {
         <vd-icon
-          name="light-mode"
-          size="24"
+          vdName="light-mode"
+          vdSize="24"
           [vdAnimation]="{
             keyframes: { scale: [0, 1] },
           }"
@@ -27,8 +27,8 @@ import { ThemeService } from '../../../core/services/theme/theme.service';
       }
       @case (themeValues.LIGHT) {
         <vd-icon
-          name="dark-mode"
-          size="24"
+          vdName="dark-mode"
+          vdSize="24"
           [vdAnimation]="{
             keyframes: { scale: [0, 1] },
           }"

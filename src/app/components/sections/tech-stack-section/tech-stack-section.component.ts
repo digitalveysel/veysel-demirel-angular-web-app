@@ -31,7 +31,7 @@ interface ITechIcon {
           class="group flex aspect-square items-center justify-center border-neutral-600"
         >
           <vd-icon
-            name="{{ techIcon.icon }}"
+            vdName="{{ techIcon.icon }}"
             vdClass="text-neutral-100 opacity-50 group-hover:opacity-100 pointer-events-none"
           />
         </li>

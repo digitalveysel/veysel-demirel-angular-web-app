@@ -14,27 +14,27 @@ interface IAnimation {
   selector: '[vdAnimation]',
 })
 export class AnimationDirective {
-  @Input('vdAnimation') config!: IAnimation;
+  @Input('vdAnimation') vdConfig!: IAnimation;
 
   constructor(private el: ElementRef<HTMLElement>) {
     afterNextRender(() => {
       const targetEl = this.el.nativeElement;
-      const targetSelector = this.config?.selector || '';
+      const targetSelector = this.vdConfig?.selector || '';
 
       if (targetEl) {
-        if (this.config?.isHover) {
+        if (this.vdConfig?.isHover) {
           hover(targetEl, (element) => {
             const hoverEl = element.querySelectorAll(targetSelector);
-            animate(hoverEl, this.config.keyframes, this.config.options);
+            animate(hoverEl, this.vdConfig.keyframes, this.vdConfig.options);
             return () =>
               animate(
                 hoverEl,
-                this.config?.callbackKeyframes as DOMKeyframesDefinition,
-                this.config.options,
+                this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
+                this.vdConfig.options,
               );
           });
         } else {
-          animate(targetEl, this.config.keyframes, this.config.options);
+          animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
         }
       }
     });

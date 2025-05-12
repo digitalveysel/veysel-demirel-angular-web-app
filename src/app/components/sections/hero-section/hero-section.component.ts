@@ -17,9 +17,9 @@ import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.di
         developer and ui/ux designer based in Türkiye.
       </h1>
       <vd-typing-animation
-        [subject]="'I'"
-        [verbs]="['develop', 'design', 'create']"
-        [phrases]="['impressive web applications', 'creative web sites', 'useful design systems']"
+        [vdSubject]="'I'"
+        [vdVerbs]="['develop', 'design', 'create']"
+        [vdPhrases]="['impressive web applications', 'creative web sites', 'useful design systems']"
       />
     </section>
   `,

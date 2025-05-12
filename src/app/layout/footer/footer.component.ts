@@ -26,7 +26,7 @@ interface ISocialItems {
             target="_blank"
             class="flex items-center justify-center p-2"
           >
-            <vd-icon [name]="item.icon" size="24" />
+            <vd-icon [vdName]="item.icon" vdSize="24" />
           </a>
         </li>
       }

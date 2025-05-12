@@ -6,16 +6,16 @@ import { ISpeciality } from '../../../core/models/speciality.model';
   selector: 'vd-speciality-card',
   imports: [IconComponent],
   template: ` <div
-    [id]="speciality.id"
+    [id]="vdSpeciality.id"
     class="flex flex-col gap-y-3 border border-neutral-600 bg-neutral-800 p-8"
   >
-    <vd-icon [name]="speciality.icon" vdClass="text-orange-500" size="48" />
+    <vd-icon [vdName]="vdSpeciality.icon" vdClass="text-orange-500" vdSize="48" />
     <div class="space-y-2">
-      <h3 class="font-semibold">{{ speciality.title }}</h3>
-      <p class="text-14px">{{ speciality.description }}</p>
+      <h3 class="font-semibold">{{ vdSpeciality.title }}</h3>
+      <p class="text-14px">{{ vdSpeciality.description }}</p>
     </div>
   </div>`,
 })
 export class SpecialityCardComponent {
-  @Input({ required: true }) speciality!: ISpeciality;
+  @Input({ required: true }) vdSpeciality!: ISpeciality;
 }

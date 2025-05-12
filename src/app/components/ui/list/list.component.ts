@@ -5,19 +5,19 @@ import { IListItem } from '../../../core/models/list.model';
 @Component({
   selector: 'vd-list',
   imports: [IconComponent],
-  template: `<ul [class]="listClass">
-    @for (item of list; track item.id) {
-      <li [class]="listItemClass">
-        <vd-icon [name]="listIcon" size="24" [vdClass]="listIconClass" />
+  template: `<ul [class]="vdListClass">
+    @for (item of vdList; track item.id) {
+      <li [class]="vdListItemClass">
+        <vd-icon [vdName]="vdListIcon" vdSize="24" [vdClass]="vdListIconClass" />
         <p class="font-medium">{{ item.text }}</p>
       </li>
     }
   </ul>`,
 })
 export class ListComponent {
-  @Input({ required: true }) list: IListItem[] = [];
-  @Input() listIcon = 'check';
-  @Input() listIconClass = 'text-orange-500';
-  @Input() listClass = 'grid grid-cols-1 gap-4 md:grid-cols-3';
-  @Input() listItemClass = 'flex gap-x-3';
+  @Input({ required: true }) vdList: IListItem[] = [];
+  @Input() vdListClass = 'grid grid-cols-1 gap-4 md:grid-cols-3';
+  @Input() vdListIcon = 'check';
+  @Input() vdListIconClass = 'text-orange-500';
+  @Input() vdListItemClass = 'flex gap-x-3';
 }

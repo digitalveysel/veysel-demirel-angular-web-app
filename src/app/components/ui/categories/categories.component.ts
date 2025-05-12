@@ -39,7 +39,7 @@ import { ICategory } from '../../../core/models/category.model';
   </nav>`,
 })
 export class CategoriesComponent {
-  @Input({ required: true }) set categories(value: ICategory[]) {
+  @Input({ required: true }) set vdCategories(value: ICategory[]) {
     this.$categories.set([...value]);
   }
 

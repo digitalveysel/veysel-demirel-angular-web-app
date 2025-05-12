@@ -13,20 +13,20 @@ import {
   selector: 'vd-typing-animation',
   template: `
     <p class="text-16px md:text-24px font-semibold italic">
-      <span>{{ subject + ' ' }}</span>
+      <span>{{ vdSubject + ' ' }}</span>
       <span>{{ displayVerb() + ' ' }}</span>
       <span class="text-orange-500">{{ displayPhrase() }}</span>
     </p>
   `,
 })
 export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
-  @Input({ required: true }) subject!: string;
-  @Input({ required: true }) verbs!: string[];
-  @Input({ required: true }) phrases!: string[];
+  @Input({ required: true }) vdSubject!: string;
+  @Input({ required: true }) vdVerbs!: string[];
+  @Input({ required: true }) vdPhrases!: string[];
 
-  @Input() typingDelay = 100;
-  @Input() pauseAfterWrite = 1000;
-  @Input() pauseAfterErase = 500;
+  @Input() vdTypingDelay = 100;
+  @Input() vdPauseAfterWrite = 1000;
+  @Input() vdPauseAfterErase = 500;
 
   private index = 0;
   private charIndex = 0;
@@ -63,8 +63,8 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
     }
 
     if (time >= this.nextUpdateTime) {
-      const verb = this.verbs[this.index];
-      const phrase = this.phrases[this.index];
+      const verb = this.vdVerbs[this.index];
+      const phrase = this.vdPhrases[this.index];
       const fullText = `${verb} ${phrase}`;
 
       this.charIndex = Math.min(Math.max(this.charIndex + this.direction, 0), fullText.length);
@@ -82,14 +82,14 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
 
       if (this.direction > 0 && this.charIndex === fullText.length) {
         this.direction = -1;
-        this.pauseUntil = time + this.pauseAfterWrite;
+        this.pauseUntil = time + this.vdPauseAfterWrite;
       } else if (this.direction < 0 && this.charIndex === 0) {
         this.direction = 1;
-        this.index = (this.index + 1) % this.verbs.length;
-        this.pauseUntil = time + this.pauseAfterErase;
+        this.index = (this.index + 1) % this.vdVerbs.length;
+        this.pauseUntil = time + this.vdPauseAfterErase;
       }
 
-      this.nextUpdateTime = time + this.typingDelay;
+      this.nextUpdateTime = time + this.vdTypingDelay;
     }
 
     this.rafId = requestAnimationFrame(this.step.bind(this));

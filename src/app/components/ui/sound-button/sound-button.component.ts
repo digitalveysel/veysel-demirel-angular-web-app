@@ -15,16 +15,16 @@ import { SoundService } from '../../../core/services/sound/sound.service';
   >
     @if (store.isMuted()) {
       <vd-icon
-        name="sound-off"
-        size="24"
+        vdName="sound-off"
+        vdSize="24"
         [vdAnimation]="{
           keyframes: { scale: [0, 1] },
         }"
       />
     } @else {
       <vd-icon
-        name="sound-on"
-        size="24"
+        vdName="sound-on"
+        vdSize="24"
         [vdAnimation]="{
           keyframes: { scale: [0, 1] },
         }"

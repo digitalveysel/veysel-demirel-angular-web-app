@@ -15,16 +15,16 @@ import { SoundService } from '../../../core/services/sound/sound.service';
   >
     @if (store.isMenuOpen()) {
       <vd-icon
-        name="close"
-        size="32"
+        vdName="close"
+        vdSize="32"
         [vdAnimation]="{
           keyframes: { scale: [0, 1] },
         }"
       />
     } @else {
       <vd-icon
-        name="menu"
-        size="32"
+        vdName="menu"
+        vdSize="32"
         [vdAnimation]="{
           keyframes: { scale: [0, 1] },
         }"

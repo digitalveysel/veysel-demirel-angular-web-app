@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IconComponent } from '../../shared/components/ui/icon/icon.component';
-import { SoundButtonComponent } from '../../shared/components/ui/sound-button/sound-button.component';
+import { IconComponent } from '../../components/ui/icon/icon.component';
+import { SoundButtonComponent } from '../../components/ui/sound-button/sound-button.component';
 
 interface ISocialItems {
+  id: string;
   icon: string;
   link: string;
 }
@@ -17,9 +18,14 @@ interface ISocialItems {
       <li>
         <vd-sound-button />
       </li>
-      @for (item of items; track item.icon) {
+      @for (item of items; track item.id) {
         <li>
-          <a [href]="item.link" target="_blank" class="flex items-center justify-center p-2">
+          <a
+            [id]="item.id"
+            [href]="item.link"
+            target="_blank"
+            class="flex items-center justify-center p-2"
+          >
             <vd-icon [name]="item.icon" size="24" />
           </a>
         </li>
@@ -30,14 +36,17 @@ interface ISocialItems {
 export class FooterComponent {
   items: ISocialItems[] = [
     {
+      id: 'githubAnchor',
       icon: 'github',
       link: 'https://github.com/digitalveysel',
     },
     {
+      id: 'figmaAnchor',
       icon: 'figma',
       link: 'https://www.figma.com/@digitalveysel',
     },
     {
+      id: 'linkedInAnchor',
       icon: 'linkedin',
       link: 'https://linkedin.com/in/digitalveysel',
     },

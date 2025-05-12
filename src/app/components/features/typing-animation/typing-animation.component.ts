@@ -1,0 +1,97 @@
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+
+@Component({
+  selector: 'vd-typing-animation',
+  template: `
+    <p class="text-16px md:text-24px font-semibold italic">
+      <span>{{ subject + ' ' }}</span>
+      <span>{{ displayVerb() + ' ' }}</span>
+      <span class="text-orange-500">{{ displayPhrase() }}</span>
+    </p>
+  `,
+})
+export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
+  @Input({ required: true }) subject!: string;
+  @Input({ required: true }) verbs!: string[];
+  @Input({ required: true }) phrases!: string[];
+
+  @Input() typingDelay = 100;
+  @Input() pauseAfterWrite = 1000;
+  @Input() pauseAfterErase = 500;
+
+  private index = 0;
+  private charIndex = 0;
+  private direction: 1 | -1 = 1;
+  private rafId: number | null = null;
+  private nextUpdateTime = 0;
+  private pauseUntil = 0;
+
+  private _displayVerb = signal('');
+  private _displayPhrase = signal('');
+
+  displayVerb = this._displayVerb.asReadonly();
+  displayPhrase = this._displayPhrase.asReadonly();
+
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.rafId = requestAnimationFrame(this.step.bind(this));
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.rafId != null && isPlatformBrowser(this.platformId)) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
+  private step(time: number) {
+    if (time < this.pauseUntil) {
+      this.rafId = requestAnimationFrame(this.step.bind(this));
+      return;
+    }
+
+    if (time >= this.nextUpdateTime) {
+      const verb = this.verbs[this.index];
+      const phrase = this.phrases[this.index];
+      const fullText = `${verb} ${phrase}`;
+
+      this.charIndex = Math.min(Math.max(this.charIndex + this.direction, 0), fullText.length);
+
+      const split = verb.length;
+      const current = fullText.slice(0, this.charIndex);
+
+      if (this.charIndex <= split) {
+        this._displayVerb.set(current);
+        this._displayPhrase.set('');
+      } else {
+        this._displayVerb.set(current.slice(0, split));
+        this._displayPhrase.set(current.slice(split + 1));
+      }
+
+      if (this.direction > 0 && this.charIndex === fullText.length) {
+        this.direction = -1;
+        this.pauseUntil = time + this.pauseAfterWrite;
+      } else if (this.direction < 0 && this.charIndex === 0) {
+        this.direction = 1;
+        this.index = (this.index + 1) % this.verbs.length;
+        this.pauseUntil = time + this.pauseAfterErase;
+      }
+
+      this.nextUpdateTime = time + this.typingDelay;
+    }
+
+    this.rafId = requestAnimationFrame(this.step.bind(this));
+  }
+}

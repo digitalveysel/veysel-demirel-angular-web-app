@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, HostListener, Inject, PLATFORM_ID, signal } from '@angular/core';
-import { LogoComponent } from '../../shared/components/ui/logo/logo.component';
-import { ThemeButtonComponent } from '../../shared/components/ui/theme-button/theme-button.component';
-import { isPlatformBrowser } from '@angular/common';
-import { SoundButtonComponent } from '../../shared/components/ui/sound-button/sound-button.component';
+import { LogoComponent } from '../../components/ui/logo/logo.component';
+import { ThemeButtonComponent } from '../../components/ui/theme-button/theme-button.component';
+import { SoundButtonComponent } from '../../components/ui/sound-button/sound-button.component';
+import { MenuButtonComponent } from '../../components/ui/menu-button/menu-button.component';
+import { NavigationComponent } from '../../components/ui/navigation/navigation.component';
 import { AppStore } from '../../core/store/app.store';
-import { MenuButtonComponent } from '../../shared/components/ui/menu-button/menu-button.component';
-import { NavigationComponent } from '../../shared/components/ui/navigation/navigation.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'vd-header',

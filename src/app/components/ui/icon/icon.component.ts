@@ -6,14 +6,14 @@ import { IconService } from '../../../core/services/icon/icon.service';
 @Component({
   selector: 'vd-icon',
   imports: [],
-  template: `<div role="img" [innerHTML]="svg()" [class]="vdClass"></div>`,
+  template: `<div role="img" [innerHTML]="$svg()" [class]="vdClass"></div>`,
 })
 export class IconComponent implements OnInit {
   @Input() vdName = 'widgets';
   @Input() vdSize = '';
   @Input() vdClass = '';
 
-  svg = signal<SafeHtml>('');
+  $svg = signal<SafeHtml>('');
 
   constructor(
     private iconService: IconService,
@@ -29,7 +29,7 @@ export class IconComponent implements OnInit {
           svgStr = this.updateSvgDimensions(svgStr, this.vdSize);
         }
 
-        this.svg.set(this.sanitizer.bypassSecurityTrustHtml(svgStr));
+        this.$svg.set(this.sanitizer.bypassSecurityTrustHtml(svgStr));
       });
   }
 

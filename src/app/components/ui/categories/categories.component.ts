@@ -8,13 +8,10 @@ import { ICategory } from '../../../core/models/category.model';
     aria-label="Article Categories"
     class="relative border border-neutral-600 bg-neutral-800"
   >
-    <span
-      class="pointer-events-none absolute top-0 left-0 h-full w-5 bg-linear-to-r from-neutral-800 to-transparent select-none"
-    ></span>
     <ul
       role="tablist"
       aria-orientation="horizontal"
-      class="scroll-hide flex w-full touch-pan-x snap-x snap-mandatory scroll-pl-4 gap-4 overflow-x-auto py-4 md:scroll-pl-8 md:gap-6 md:py-8"
+      class="scroll-hide flex w-full touch-pan-x snap-x snap-mandatory scroll-pl-4 gap-4 overflow-x-auto mask-x-from-94% mask-x-to-100% py-4 md:scroll-pl-8 md:gap-6 md:py-8"
     >
       @for (category of $categories(); track category.id) {
         <li
@@ -33,9 +30,6 @@ import { ICategory } from '../../../core/models/category.model';
         </li>
       }
     </ul>
-    <span
-      class="pointer-events-none absolute top-0 right-0 h-full w-20 bg-linear-to-r from-transparent to-neutral-800 select-none"
-    ></span>
   </nav>`,
 })
 export class CategoriesComponent {

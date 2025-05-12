@@ -18,7 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
   ],
   template: `<header
     class="sticky top-0 flex items-center justify-center gap-x-2 z-7 xl:gap-x-4 px-5 py-3 xl:px-10 xl:py-5 {{
-      isSticky() || store.isMenuOpen() ? 'bg-neutral-800' : 'bg-transparent'
+      $isSticky() || store.isMenuOpen() ? 'bg-neutral-800' : 'bg-transparent'
     }}"
   >
     <vd-logo />
@@ -39,7 +39,7 @@ import { isPlatformBrowser } from '@angular/common';
   </header>`,
 })
 export class HeaderComponent implements AfterViewInit {
-  isSticky = signal<boolean>(false);
+  $isSticky = signal<boolean>(false);
 
   constructor(
     public store: AppStore,
@@ -53,7 +53,7 @@ export class HeaderComponent implements AfterViewInit {
   @HostListener('window:scroll')
   onWindowScroll() {
     if (isPlatformBrowser(this.platformId)) {
-      this.isSticky.set(window.scrollY > 0);
+      this.$isSticky.set(window.scrollY > 0);
     }
   }
 }

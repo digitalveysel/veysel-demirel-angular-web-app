@@ -13,7 +13,7 @@ import { IListItem } from '../../../core/models/list.model';
     vdScrollSpy
   >
     <h2 class="font-montserrat-alternates text-24px font-semibold xl:pl-4">Skill highlights</h2>
-    <div class="border border-neutral-600 bg-neutral-800 p-4">
+    <div class="border border-neutral-600 bg-neutral-800 p-4 lg:p-8">
       <vd-list [vdList]="skillHighlights" />
     </div>
   </section>`,

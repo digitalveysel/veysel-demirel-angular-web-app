@@ -41,11 +41,6 @@ interface IMenuItem {
 export class NavigationComponent {
   navItems: IMenuItem[] = [
     {
-      id: 'heroAnchor',
-      link: 'hero',
-      name: 'hero',
-    },
-    {
       id: 'articlesAnchor',
       link: 'articles',
       name: 'articles',

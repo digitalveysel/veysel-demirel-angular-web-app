@@ -1,6 +1,8 @@
+import { ICategory } from './category.model';
+
 export interface IArticle {
   id: string;
-  category: string;
+  category: ICategory;
   title: string;
   description: string;
   link: string;

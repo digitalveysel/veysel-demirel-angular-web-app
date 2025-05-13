@@ -35,11 +35,8 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
   private nextUpdateTime = 0;
   private pauseUntil = 0;
 
-  private _displayVerb = signal('');
-  private _displayPhrase = signal('');
-
-  displayVerb = this._displayVerb.asReadonly();
-  displayPhrase = this._displayPhrase.asReadonly();
+  displayVerb = signal('');
+  displayPhrase = signal('');
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
@@ -73,11 +70,11 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
       const current = fullText.slice(0, this.charIndex);
 
       if (this.charIndex <= split) {
-        this._displayVerb.set(current);
-        this._displayPhrase.set('');
+        this.displayVerb.set(current);
+        this.displayPhrase.set('');
       } else {
-        this._displayVerb.set(current.slice(0, split));
-        this._displayPhrase.set(current.slice(split + 1));
+        this.displayVerb.set(current.slice(0, split));
+        this.displayPhrase.set(current.slice(split + 1));
       }
 
       if (this.direction > 0 && this.charIndex === fullText.length) {

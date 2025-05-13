@@ -4,11 +4,10 @@ import { CategoriesComponent } from '../../ui/categories/categories.component';
 import { ArticleCardComponent } from '../../ui/article-card/article-card.component';
 import { ICategories, ICategory } from '../../../core/models/category.model';
 import { IArticle } from '../../../core/models/article.model';
-import { AnimationDirective } from '../../../directives/animation/animation.directive';
 
 @Component({
   selector: 'vd-articles-section',
-  imports: [ScrollSpyDirective, CategoriesComponent, ArticleCardComponent, AnimationDirective],
+  imports: [ScrollSpyDirective, CategoriesComponent, ArticleCardComponent],
   template: `<section
     id="articles"
     aria-label="Articles Content"
@@ -18,13 +17,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
     <vd-categories [vdCategories]="categories" (vdChange)="onCategoryChange($event)" />
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
       @for (article of fArticles(); track article.id) {
-        <vd-article-card
-          [vdArticle]="article"
-          [vdAnimation]="{
-            keyframes: { scale: [0, 1] },
-            options: { duration: 0.5 },
-          }"
-        />
+        <vd-article-card [vdArticle]="article" />
       }
     </div>
   </section>`,

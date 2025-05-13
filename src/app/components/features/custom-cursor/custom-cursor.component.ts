@@ -32,10 +32,10 @@ import { AppStore } from '../../../core/store/app.store';
 export class CustomCursorComponent implements OnInit, AfterViewInit {
   @ViewChild('cursorEl', { static: false }) private cursorRef!: ElementRef<HTMLSpanElement>;
 
+  private hasFinePointer = false;
   private pointerX = motionValue(0);
   private pointerY = motionValue(0);
   private pointerMoveHandler = this.onPointerMove.bind(this);
-  private hasFinePointer = false;
 
   constructor(
     public store: AppStore,
@@ -51,17 +51,21 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (!this.hasFinePointer) return;
-    this.initializeAnimation();
-    this.document.addEventListener('pointermove', this.pointerMoveHandler);
-    this.addHoverListeners();
+    this.initMainAnimation();
+    this.handleMove();
+    this.handleHover();
   }
 
-  private addHoverListeners(): void {
+  private handleHover(): void {
     const linkElements = this.document.querySelectorAll('a, button');
     linkElements.forEach((el) => {
       el.addEventListener('mouseenter', () => this.onElementHover(true));
       el.addEventListener('mouseleave', () => this.onElementHover(false));
     });
+  }
+
+  private handleMove(): void {
+    this.document.addEventListener('pointermove', this.pointerMoveHandler);
   }
 
   private onElementHover(isHovering: boolean): void {
@@ -70,7 +74,7 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private initializeAnimation(): void {
+  private initMainAnimation(): void {
     const el = this.cursorRef.nativeElement;
     const { left, top, width, height } = el.getBoundingClientRect();
     const originX = left + width / 2;

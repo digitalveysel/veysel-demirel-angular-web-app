@@ -46,8 +46,8 @@ export class ScrollSpyService {
   private setActiveSection(id: string): void {
     const baseURL = this.location.path(true).split('#')[0];
 
-    this.store.setActiveSection(id);
     this.location.go(`${baseURL}#${id}`);
+    this.store.setActiveSection(id);
   }
 
   register(id: string, element: HTMLElement): void {

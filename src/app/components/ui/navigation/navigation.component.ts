@@ -73,5 +73,7 @@ export class NavigationComponent {
     if (link != this.store.activeSection()) {
       this.soundService.play('scroll');
     }
+
+    this.store.setActiveSection(link);
   }
 }

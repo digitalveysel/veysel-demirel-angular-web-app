@@ -1,14 +1,6 @@
 import { Directive, ElementRef, Input, afterNextRender } from '@angular/core';
-import { animate, AnimationOptions, DOMKeyframesDefinition, hover } from 'motion';
-
-interface IAnimation {
-  isHover?: boolean;
-  selector?: string;
-  keyframes: DOMKeyframesDefinition;
-  options?: AnimationOptions;
-  callbackKeyframes?: DOMKeyframesDefinition;
-  callbackOptions?: AnimationOptions;
-}
+import { animate, DOMKeyframesDefinition, hover, inView } from 'motion';
+import { IAnimation, IAnimationTypes } from '../../core/models/animation.model';
 
 @Directive({
   selector: '[vdAnimation]',
@@ -22,17 +14,43 @@ export class AnimationDirective {
       const targetSelector = this.vdConfig?.selector || '';
 
       if (targetEl) {
-        if (this.vdConfig?.isHover) {
-          hover(targetEl, (element) => {
-            const hoverEl = element.querySelectorAll(targetSelector);
-            animate(hoverEl, this.vdConfig.keyframes, this.vdConfig.options);
-            return () =>
-              animate(
-                hoverEl,
-                this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
-                this.vdConfig.options,
-              );
-          });
+        const aType = this.vdConfig.type;
+        if (aType) {
+          switch (this.vdConfig.type) {
+            case IAnimationTypes.PURE:
+              animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
+              break;
+
+            case IAnimationTypes.HOVER:
+              hover(targetEl, (element) => {
+                const aEl = element.querySelectorAll(targetSelector) || element;
+                animate(aEl, this.vdConfig.keyframes, this.vdConfig.options);
+                return () =>
+                  animate(
+                    aEl,
+                    this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
+                    this.vdConfig.options,
+                  );
+              });
+              break;
+
+            case IAnimationTypes.IN_VIEW:
+              inView(targetEl, (element) => {
+                const aEl = element.querySelectorAll(targetSelector) || element;
+                animate(aEl, this.vdConfig.keyframes, this.vdConfig.options);
+                return () =>
+                  animate(
+                    aEl,
+                    this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
+                    this.vdConfig.options,
+                  );
+              });
+              break;
+
+            default:
+              animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
+              break;
+          }
         } else {
           animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
         }

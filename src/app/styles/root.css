@@ -1,7 +1,7 @@
 @import './fonts.css';
 @import 'tailwindcss';
 @import './base.css';
-@import './utilites.css';
+@import './utilities.css';
 
 @custom-variant light (&:where([data-theme=light], [data-theme=light] *));
 

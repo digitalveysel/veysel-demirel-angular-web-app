@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --no-hmr",
+    "serve:dev": "ng serve --no-hmr",
+    "serve:ssr": "node dist/veysel-demirel-angular-web-app/server/server.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "lint": "ng lint",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "lint": "ng lint",
-    "serve:ssr:veysel-demirel-angular-web-app": "node dist/veysel-demirel-angular-web-app/server/server.mjs"
+    "clean": "rimraf dist .angular cache"
   },
   "dependencies": {
     "@angular/common": "^19.2.0",
@@ -23,7 +24,11 @@
     "@angular/platform-server": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@angular/ssr": "^19.2.8",
+    "dotenv": "^16.5.0",
     "express": "^4.18.2",
+    "joi": "^17.13.3",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.14.3",
     "motion": "^12.7.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

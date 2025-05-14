@@ -10,49 +10,48 @@ export class AnimationDirective {
 
   constructor(private el: ElementRef<HTMLElement>) {
     afterNextRender(() => {
-      const targetEl = this.el.nativeElement;
-      const targetSelector = this.vdConfig?.selector || '';
+      const tSelector = this.vdConfig?.selector;
+      const nEl = this.el.nativeElement;
+      const tEl = tSelector ? nEl.querySelectorAll(tSelector) : nEl;
 
-      if (targetEl) {
+      if (tEl) {
         const aType = this.vdConfig.type;
         if (aType) {
-          switch (this.vdConfig.type) {
+          switch (aType) {
             case IAnimationTypes.PURE:
-              animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
+              animate(tEl, this.vdConfig.keyframes, this.vdConfig.options);
               break;
 
             case IAnimationTypes.HOVER:
-              hover(targetEl, (element) => {
-                const aEl = element.querySelectorAll(targetSelector) || element;
-                animate(aEl, this.vdConfig.keyframes, this.vdConfig.options);
+              hover(tEl, () => {
+                animate(tEl, this.vdConfig.keyframes, this.vdConfig.options);
                 return () =>
                   animate(
-                    aEl,
+                    tEl,
                     this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
-                    this.vdConfig.options,
+                    this.vdConfig.callbackOptions,
                   );
               });
               break;
 
             case IAnimationTypes.IN_VIEW:
-              inView(targetEl, (element) => {
-                const aEl = element.querySelectorAll(targetSelector) || element;
-                animate(aEl, this.vdConfig.keyframes, this.vdConfig.options);
+              inView(tEl, () => {
+                animate(tEl, this.vdConfig.keyframes, this.vdConfig.options);
                 return () =>
                   animate(
-                    aEl,
+                    tEl,
                     this.vdConfig?.callbackKeyframes as DOMKeyframesDefinition,
-                    this.vdConfig.options,
+                    this.vdConfig.callbackOptions,
                   );
               });
               break;
 
             default:
-              animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
+              animate(tEl, this.vdConfig.keyframes, this.vdConfig.options);
               break;
           }
         } else {
-          animate(targetEl, this.vdConfig.keyframes, this.vdConfig.options);
+          animate(tEl, this.vdConfig.keyframes, this.vdConfig.options);
         }
       }
     });

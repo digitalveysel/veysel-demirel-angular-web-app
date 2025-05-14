@@ -4,10 +4,12 @@ import { CategoriesComponent } from '../../ui/categories/categories.component';
 import { ArticleCardComponent } from '../../ui/article-card/article-card.component';
 import { ICategories, ICategory } from '../../../core/models/category.model';
 import { IArticle } from '../../../core/models/article.model';
+import { AnimationDirective } from '../../../directives/animation/animation.directive';
+import { IAnimationTypes } from '../../../core/models/animation.model';
 
 @Component({
   selector: 'vd-articles-section',
-  imports: [ScrollSpyDirective, CategoriesComponent, ArticleCardComponent],
+  imports: [ScrollSpyDirective, CategoriesComponent, ArticleCardComponent, AnimationDirective],
   template: `<section
     id="articles"
     aria-label="Articles Content"
@@ -16,8 +18,17 @@ import { IArticle } from '../../../core/models/article.model';
   >
     <vd-categories [vdCategories]="categories" (vdChange)="onCategoryChange($event)" />
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
-      @for (article of fArticles(); track article.id) {
-        <vd-article-card [vdArticle]="article" />
+      @for (article of $fArticles(); track article.id; let index = $index) {
+        <vd-article-card
+          vdClass="opacity-0 h-full"
+          [vdArticle]="article"
+          [vdAnimation]="{
+            type: animationTypes.PURE,
+            selector: '#' + article.id,
+            keyframes: { opacity: [0, 1], y: [20, 0] },
+            options: { duration: 0.5, delay: index * 0.1 },
+          }"
+        />
       }
     </div>
   </section>`,
@@ -32,7 +43,7 @@ export class ArticlesSectionComponent {
     { id: 'react', name: 'React' },
     { id: 'nextjs', name: 'Next.js' },
   ];
-  articles = signal<IArticle[]>([
+  $articles = signal<IArticle[]>([
     {
       id: 'tailwindJITForInstantStyling',
       category: { id: 'tailwindCSS', name: 'Tailwind CSS' },
@@ -41,7 +52,7 @@ export class ArticlesSectionComponent {
       link: '#',
     },
     {
-      id: 'whatsNewInTypeScript5.1',
+      id: 'whatsNewInTypeScript',
       category: { id: 'typescript', name: 'TypeScript' },
       title: 'What’s New in TypeScript 5.1',
       description:
@@ -65,14 +76,15 @@ export class ArticlesSectionComponent {
     },
   ]);
 
-  sCategory = signal<string>(ICategories.ALL);
-  fArticles = computed(() =>
-    this.sCategory() === ICategories.ALL
-      ? this.articles()
-      : this.articles().filter((a) => a.category.id === this.sCategory()),
+  animationTypes = IAnimationTypes;
+  $sCategory = signal<string>(ICategories.ALL);
+  $fArticles = computed(() =>
+    this.$sCategory() === ICategories.ALL
+      ? this.$articles()
+      : this.$articles().filter((a) => a.category.id === this.$sCategory()),
   );
 
   onCategoryChange($event: string): void {
-    this.sCategory.set($event);
+    this.$sCategory.set($event);
   }
 }

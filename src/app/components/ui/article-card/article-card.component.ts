@@ -7,7 +7,7 @@ import { IArticle } from '../../../core/models/article.model';
   imports: [BadgeComponent],
   template: `<article
     id="{{ vdArticle.id }}"
-    class="flex flex-col gap-4 border border-neutral-600 bg-neutral-800 p-6"
+    class="flex flex-col gap-4 border border-neutral-600 bg-neutral-800 p-6 {{ vdClass }}"
   >
     <vd-badge [vdText]="vdArticle.category.name" />
     <div class="space-y-2">
@@ -19,4 +19,5 @@ import { IArticle } from '../../../core/models/article.model';
 })
 export class ArticleCardComponent {
   @Input({ required: true }) vdArticle!: IArticle;
+  @Input() vdClass = '';
 }

@@ -8,7 +8,7 @@ import { IListItem } from '../../../core/models/list.model';
   template: `<ul [class]="vdListClass">
     @for (item of vdList; track item.id) {
       <li [class]="vdListItemClass">
-        <vd-icon [vdName]="vdListIcon" vdSize="24" [vdClass]="vdListIconClass" />
+        <vd-icon [vdName]="vdListIcon" [vdSize]="vdListIconSize" [vdClass]="vdListIconClass" />
         <p class="font-medium">{{ item.text }}</p>
       </li>
     }
@@ -19,5 +19,6 @@ export class ListComponent {
   @Input() vdListClass = 'grid grid-cols-1 gap-4 md:grid-cols-3';
   @Input() vdListIcon = 'check';
   @Input() vdListIconClass = 'text-orange-500';
+  @Input() vdListIconSize = '24';
   @Input() vdListItemClass = 'flex gap-x-3';
 }

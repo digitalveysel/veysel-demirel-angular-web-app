@@ -3,7 +3,7 @@ import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.di
 import { CategoriesComponent } from '../../ui/categories/categories.component';
 import { ArticleCardComponent } from '../../ui/article-card/article-card.component';
 import { ICategories, ICategory } from '../../../core/models/category.model';
-import { IArticle } from '../../../core/models/article.model';
+import { IArticleSummary } from '../../../core/models/article.model';
 import { AnimationDirective } from '../../../directives/animation/animation.directive';
 import { IAnimationTypes } from '../../../core/models/animation.model';
 
@@ -43,13 +43,13 @@ export class ArticlesSectionComponent {
     { id: 'react', name: 'React' },
     { id: 'nextjs', name: 'Next.js' },
   ];
-  $articles = signal<IArticle[]>([
+  $articles = signal<IArticleSummary[]>([
     {
       id: 'tailwindJITForInstantStyling',
       category: { id: 'tailwindCSS', name: 'Tailwind CSS' },
       title: 'Tailwind JIT for Instant Styling',
       description: 'Use Tailwind’s JIT compiler for instant, custom utility classes.',
-      link: '#',
+      href: '#',
     },
     {
       id: 'whatsNewInTypeScript',
@@ -57,14 +57,14 @@ export class ArticlesSectionComponent {
       title: 'What’s New in TypeScript 5.1',
       description:
         'Check out TypeScript 5.1’s tuple updates, export checks, and better type inference.',
-      link: '#',
+      href: '#',
     },
     {
       id: 'zonelessSSRInAngular19',
       category: { id: 'angular', name: 'Angular' },
       title: 'Zoneless SSR in Angular 19',
       description: 'Angular 19’s zone-free SSR boosts performance and simplifies server setup.',
-      link: '#',
+      href: '#',
     },
     {
       id: 'reactServerComponentsToday',
@@ -72,7 +72,7 @@ export class ArticlesSectionComponent {
       title: 'React Server Components Today',
       description:
         'React Server Components enable efficient data fetching and lightweight rendering.',
-      link: '#',
+      href: '#',
     },
   ]);
 

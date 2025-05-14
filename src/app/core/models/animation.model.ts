@@ -1,7 +1,7 @@
 import { AnimationOptions, DOMKeyframesDefinition } from 'motion';
 
 export interface IAnimation {
-  type?: IAnimationTypes;
+  type?: 'pure' | 'hover' | 'inView';
   selector?: string;
   keyframes: DOMKeyframesDefinition;
   options?: AnimationOptions;

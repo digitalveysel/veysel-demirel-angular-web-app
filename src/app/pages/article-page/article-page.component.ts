@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListComponent } from '../../components/ui/list/list.component';
 import { TitleComponent } from '../../components/ui/title/title.component';
 import { BlockquoteComponent } from '../../components/ui/blockquote/blockquote.component';
 import { IArticle, IBlockTypes, IRunTypes } from '../../core/models/article.model';
 import { AnimationDirective } from '../../directives/animation/animation.directive';
+import { ActivatedRoute } from '@angular/router';
+import { ArticleService } from '../../core/services/article/article.service';
 
 @Component({
   selector: 'vd-article-page',
@@ -79,183 +81,20 @@ import { AnimationDirective } from '../../directives/animation/animation.directi
     </article>
   `,
 })
-export class ArticlePageComponent {
+export class ArticlePageComponent implements OnInit {
   blockTypes = IBlockTypes;
   runTypes = IRunTypes;
-  article: IArticle = {
-    id: 'article-2025-angular-signals',
-    title: 'Understanding Angular Signals and Reactivity in Angular 17',
-    description:
-      'Explore how Angular 17 introduces Signals, a new way to manage reactive state, improving performance and developer experience.',
-    sections: [
-      {
-        id: 'section-intro',
-        blocks: [
-          {
-            id: 'section-intro-01',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-intro-01-01',
-                  type: 'text',
-                  text: 'Angular 17 introduces Signals—a reactive primitive aimed at simplifying state management in Angular applications. This innovation allows developers to create reactive expressions without relying on complex change detection mechanisms.',
-                },
-              ],
-            },
-          },
-          {
-            id: 'section-intro-02',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-intro-02-01',
-                  type: 'text',
-                  text: 'In this article, we explore how Signals work and how you can integrate them into your Angular projects.',
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        id: 'section-signals-intro',
-        blocks: [
-          {
-            id: 'section-signals-intro-01',
-            type: 'title',
-            data: {
-              level: 'h2',
-              text: 'What Are Angular Signals?',
-            },
-          },
-          {
-            id: 'section-signals-intro-02',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-signals-intro-02-01',
-                  type: 'text',
-                  text: 'Signals are reactive variables that notify subscribers when their value changes. They offer fine-grained reactivity and work without relying on traditional change detection.',
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        id: 'section-signals-core-concepts',
-        blocks: [
-          {
-            id: 'section-signals-core-concepts-01',
-            type: 'title',
-            data: {
-              level: 'h3',
-              text: 'Core Concepts of Signals',
-            },
-          },
-          {
-            id: 'section-signals-core-concepts-02',
-            type: 'list',
-            data: {
-              icon: 'check-circle',
-              items: [
-                { id: 'core-01', text: 'Signals are synchronous by default.' },
-                { id: 'core-02', text: 'They automatically track dependencies.' },
-                { id: 'core-03', text: 'They are ideal for performance-critical UIs.' },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        id: 'section-signals-usage',
-        blocks: [
-          {
-            id: 'section-signals-usage-01',
-            type: 'title',
-            data: {
-              level: 'h2',
-              text: 'Using Signals in Components',
-            },
-          },
-          {
-            id: 'section-signals-usage-02',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-signals-usage-02-01',
-                  type: 'text',
-                  text: 'To use Signals, import the signal() function from @angular/core. You can define reactive values and bind them in templates using Angulars new syntax.',
-                },
-              ],
-            },
-          },
-          {
-            id: 'section-signals-usage-03',
-            type: 'blockquote',
-            data: {
-              text: '“Signals represent a new era of reactivity in Angular. They simplify the mental model and enable high-performance UIs.”',
-              citeText: 'Minko Gechev, Angular Team',
-            },
-          },
-        ],
-      },
-      {
-        id: 'section-signals-advanced',
-        blocks: [
-          {
-            id: 'section-signals-advanced-01',
-            type: 'title',
-            data: {
-              level: 'h3',
-              text: 'Advanced Patterns with Signals',
-            },
-          },
-          {
-            id: 'section-signals-advanced-02',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-signals-advanced-02-01',
-                  type: 'text',
-                  text: 'You can combine Signals with effects and computed values. Effects run side effects when dependent signals change, and computed values provide derived state.',
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        id: 'section-conclusion',
-        blocks: [
-          {
-            id: 'section-conclusion-01',
-            type: 'title',
-            data: {
-              level: 'h2',
-              text: 'Conclusion',
-            },
-          },
-          {
-            id: 'section-conclusion-02',
-            type: 'paragraph',
-            data: {
-              runs: [
-                {
-                  id: 'section-conclusion-02-01',
-                  type: 'text',
-                  text: 'Angular Signals bring a fresh and powerful approach to state management. They integrate cleanly with Angular templates and offer a more predictable and performant way to build applications.',
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  };
+  article!: IArticle;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private articleService: ArticleService,
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('id') || '';
+    this.articleService.getById(id).subscribe((article) => {
+      this.article = article;
+    });
+  }
 }

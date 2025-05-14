@@ -5,7 +5,6 @@ import { IconService } from '../../../core/services/icon/icon.service';
 
 @Component({
   selector: 'vd-icon',
-  imports: [],
   template: `<div role="img" [innerHTML]="$svg()" [class]="vdClass"></div>`,
 })
 export class IconComponent implements OnInit {

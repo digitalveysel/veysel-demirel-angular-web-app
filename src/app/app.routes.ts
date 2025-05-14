@@ -7,6 +7,7 @@ import { ArticlePageComponent } from './pages/article-page/article-page.componen
 export const routes: Routes = [
   {
     path: '',
+    title: 'Veysel Demirel',
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomePageComponent },

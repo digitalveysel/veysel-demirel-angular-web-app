@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
-import { ArticlesPageComponent } from './pages/articles-page/articles-page.component';
+import { ArticlePageComponent } from './pages/article-page/article-page.component';
 
 export const routes: Routes = [
   {
@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomePageComponent },
-      { path: 'articles', component: ArticlesPageComponent },
+      { path: 'article/:id', component: ArticlePageComponent },
       {
         path: '**',
         component: NotFoundPageComponent,

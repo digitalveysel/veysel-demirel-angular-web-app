@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArticlesPageComponent } from './articles-page.component';
+import { ArticlePageComponent } from './article-page.component';
 import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
-describe('ArticlesPageComponent', () => {
-  let component: ArticlesPageComponent;
-  let fixture: ComponentFixture<ArticlesPageComponent>;
+describe('ArticlePageComponent', () => {
+  let component: ArticlePageComponent;
+  let fixture: ComponentFixture<ArticlePageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArticlesPageComponent],
+      imports: [ArticlePageComponent],
       providers: [provideExperimentalZonelessChangeDetection()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ArticlesPageComponent);
+    fixture = TestBed.createComponent(ArticlePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

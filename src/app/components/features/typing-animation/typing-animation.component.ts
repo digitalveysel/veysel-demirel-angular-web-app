@@ -26,7 +26,7 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
 
   @Input() vdTypingDelay = 100;
   @Input() vdPauseAfterWrite = 1000;
-  @Input() vdPauseAfterErase = 500;
+  @Input() vdPauseAfterErase = 100;
 
   private index = 0;
   private charIndex = 0;

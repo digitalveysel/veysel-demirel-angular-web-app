@@ -47,7 +47,8 @@
     cursor: url('/cursors/text.svg'), text;
   }
 
-  p {
+  p,
+  cite {
     cursor: url('/cursors/text.svg'), text;
   }
 

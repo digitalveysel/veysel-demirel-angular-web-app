@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IconComponent } from '../../components/ui/icon/icon.component';
-import { SoundButtonComponent } from '../../components/ui/sound-button/sound-button.component';
 
 interface ISocialItems {
   id: string;
@@ -10,14 +9,11 @@ interface ISocialItems {
 
 @Component({
   selector: 'vd-footer',
-  imports: [IconComponent, SoundButtonComponent],
+  imports: [IconComponent],
   template: `<footer class="pb-12 md:-ml-px lg:pb-16">
     <ul
       class="flex justify-center gap-x-2 border border-neutral-600 bg-neutral-800 p-2 md:p-6 lg:gap-x-4"
     >
-      <li>
-        <vd-sound-button />
-      </li>
       @for (item of items; track item.id) {
         <li>
           <a

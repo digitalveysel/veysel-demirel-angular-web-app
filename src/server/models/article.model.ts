@@ -1,11 +1,17 @@
 export interface Article {
-  id?: string;
-  title?: string;
-  description?: string;
-  sections: Section[];
-  tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  category: Category;
+  sections?: Section[];
+  tags?: string[];
+}
+
+export interface Category {
+  id: string;
+  slug: string;
+  name: string;
 }
 
 export interface Section {
@@ -22,7 +28,7 @@ export type Block =
   | CodeBlock;
 
 export interface BaseBlock {
-  id?: string;
+  id: string;
   type: 'title' | 'paragraph' | 'blockquote' | 'list' | 'image' | 'code';
   attributes?: Record<string, string>;
 }
@@ -55,7 +61,6 @@ export interface ListBlock extends BaseBlock {
   data: {
     icon: string;
     items: {
-      id: string;
       text: string;
     }[];
   };

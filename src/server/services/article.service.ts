@@ -1,7 +1,13 @@
 import Joi from 'joi';
-import { Collection, ObjectId } from 'mongodb';
-import { Article, Section, Block } from '../models/article.model';
+import { Collection, DeleteResult, InsertOneResult, WithId } from 'mongodb';
+import { Article, Section, Block, Category } from '../models/article.model';
 import Database from '../database';
+
+const categorySchema = Joi.object<Category>({
+  id: Joi.string().required(),
+  slug: Joi.string().required(),
+  name: Joi.string().required(),
+});
 
 const blockSchema = Joi.object<Block>({
   id: Joi.string().required(),
@@ -16,8 +22,11 @@ const sectionSchema = Joi.object<Section>({
 });
 
 const articleSchema = Joi.object<Article>({
+  id: Joi.string().required(),
   title: Joi.string().min(3).required(),
   description: Joi.string().min(10).required(),
+  slug: Joi.string().required(),
+  category: categorySchema.required(),
   sections: Joi.array().items(sectionSchema).min(1).required(),
   tags: Joi.array().items(Joi.string()).optional(),
 });
@@ -31,51 +40,82 @@ class ArticleService {
   }
 
   public async findAll(): Promise<Article[]> {
-    const docs = await this.collection.find().toArray();
-    return docs.map((d) => ({ ...d, id: d._id.toHexString() }));
+    return this.collection
+      .find(
+        {},
+        {
+          projection: {
+            id: 1,
+            title: 1,
+            description: 1,
+            slug: 1,
+            category: 1,
+            sections: 1,
+            tags: 1,
+          },
+        },
+      )
+      .toArray();
   }
 
-  public async findById(id: string): Promise<Article | null> {
-    if (!ObjectId.isValid(id)) return null;
-    const doc = await this.collection.findOne({ _id: new ObjectId(id) });
-    return doc ? { ...doc, id: doc._id.toHexString() } : null;
+  public async findAllSummary(): Promise<Article[]> {
+    return this.collection
+      .find(
+        {},
+        {
+          projection: {
+            id: 1,
+            title: 1,
+            description: 1,
+            slug: 1,
+            category: 1,
+          },
+        },
+      )
+      .toArray();
   }
 
-  public async create(payload: Article): Promise<Article> {
-    const { value, error } = articleSchema.validate(payload, { abortEarly: false });
-    if (error) throw new Error(error.details.map((d) => d.message).join('; '));
-
-    const res = await this.collection.insertOne({
-      ...value,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    return {
-      ...value,
-      id: res.insertedId.toHexString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-  }
-
-  public async update(id: string, payload: Article): Promise<Article | null> {
-    if (!ObjectId.isValid(id)) return null;
-    const { value, error } = articleSchema.validate(payload, { abortEarly: false });
-    if (error) throw new Error(error.details.map((d) => d.message).join('; '));
-    const updateDoc = { ...value, updatedAt: new Date() };
-    const res = await this.collection.findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { $set: updateDoc },
-      { returnDocument: 'after' },
+  public async findBySlug(payload: string): Promise<WithId<Article> | null> {
+    return this.collection.findOne(
+      { id: payload },
+      {
+        projection: {
+          id: 1,
+          title: 1,
+          description: 1,
+          slug: 1,
+          category: 1,
+          sections: 1,
+          tags: 1,
+        },
+      },
     );
-    if (!res?._id) return null;
-    return { ...value, id };
   }
 
-  public async delete(id: string): Promise<boolean> {
-    if (!ObjectId.isValid(id)) return false;
-    const res = await this.collection.deleteOne({ _id: new ObjectId(id) });
-    return res.deletedCount === 1;
+  public async create(payload: Article): Promise<InsertOneResult<Article>> {
+    const { value, error } = articleSchema.validate(payload, { abortEarly: false });
+
+    if (error) {
+      const eMessages = error.details.map((detail) => detail.message);
+      throw new Error(`[ArticleService] Validation failed: ${eMessages}`);
+    }
+
+    return this.collection.insertOne(value);
+  }
+
+  public async update(payload: Article): Promise<WithId<Article> | null> {
+    const { value, error } = articleSchema.validate(payload, { abortEarly: false });
+
+    if (error) {
+      const eMessages = error.details.map((detail) => detail.message);
+      throw new Error(`[ArticleService] Validation failed: ${eMessages}`);
+    }
+
+    return this.collection.findOneAndUpdate({ $set: value }, { returnDocument: 'after' });
+  }
+
+  public async delete(payload: string): Promise<DeleteResult> {
+    return this.collection.deleteOne({ id: payload });
   }
 }
 

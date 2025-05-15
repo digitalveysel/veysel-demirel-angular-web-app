@@ -11,6 +11,7 @@ import Logger from './server/utils/logger.utils';
 import ArticleController from './server/controllers/article.controller';
 import Config from './server/config';
 import Database from './server/database';
+import { Roots } from './server/models/roots.model';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -20,7 +21,7 @@ const angularApp = new AngularNodeAppEngine();
 const articleController = new ArticleController();
 
 app.use(express.json());
-app.use('/api/articles', articleController.router);
+app.use(`${Roots.BASE}${Roots.ARTICLES}`, articleController.router);
 
 const bootstrap = async (): Promise<void> => {
   const cInstance = Config.getInstance();

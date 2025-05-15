@@ -3,7 +3,7 @@ import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.di
 import { CategoriesComponent } from '../../ui/categories/categories.component';
 import { ArticleCardComponent } from '../../ui/article-card/article-card.component';
 import { ICategories, ICategory } from '../../../core/models/category.model';
-import { IArticleSummary } from '../../../core/models/article.model';
+import { IArticle } from '../../../core/models/article.model';
 import { AnimationDirective } from '../../../directives/animation/animation.directive';
 import { IAnimationTypes } from '../../../core/models/animation.model';
 
@@ -35,44 +35,44 @@ import { IAnimationTypes } from '../../../core/models/animation.model';
 })
 export class ArticlesSectionComponent {
   categories: ICategory[] = [
-    { id: ICategories.ALL, name: 'All', isActive: true },
-    { id: 'tailwindCSS', name: 'Tailwind CSS' },
-    { id: 'javascript', name: 'JavaScript' },
-    { id: 'typescript', name: 'TypeScript' },
-    { id: 'angular', name: 'Angular' },
-    { id: 'react', name: 'React' },
-    { id: 'nextjs', name: 'Next.js' },
+    { id: ICategories.ALL, slug: ICategories.ALL, name: 'All', isActive: true },
+    { id: 'tailwindCSS', slug: 'tailwindCSS', name: 'Tailwind CSS' },
+    { id: 'javascript', slug: 'javascript', name: 'JavaScript' },
+    { id: 'typescript', slug: 'typescript', name: 'TypeScript' },
+    { id: 'angular', slug: 'angular', name: 'Angular' },
+    { id: 'react', slug: 'react', name: 'React' },
+    { id: 'nextjs', slug: 'nextjs', name: 'Next.js' },
   ];
-  $articles = signal<IArticleSummary[]>([
+  $articles = signal<IArticle[]>([
     {
       id: 'tailwindJITForInstantStyling',
-      category: { id: 'tailwindCSS', name: 'Tailwind CSS' },
+      slug: 'tailwindJITForInstantStyling',
+      category: { id: 'tailwindCSS', slug: 'tailwindCSS', name: 'Tailwind CSS' },
       title: 'Tailwind JIT for Instant Styling',
       description: 'Use Tailwind’s JIT compiler for instant, custom utility classes.',
-      href: '#',
     },
     {
       id: 'whatsNewInTypeScript',
-      category: { id: 'typescript', name: 'TypeScript' },
+      slug: 'whatsNewInTypeScript',
+      category: { id: 'typescript', slug: 'typescript', name: 'TypeScript' },
       title: 'What’s New in TypeScript 5.1',
       description:
         'Check out TypeScript 5.1’s tuple updates, export checks, and better type inference.',
-      href: '#',
     },
     {
       id: 'zonelessSSRInAngular19',
-      category: { id: 'angular', name: 'Angular' },
+      slug: 'zonelessSSRInAngular19',
+      category: { id: 'angular', slug: 'angular', name: 'Angular' },
       title: 'Zoneless SSR in Angular 19',
       description: 'Angular 19’s zone-free SSR boosts performance and simplifies server setup.',
-      href: '#',
     },
     {
       id: 'reactServerComponentsToday',
-      category: { id: 'react', name: 'React' },
+      slug: 'reactServerComponentsToday',
+      category: { id: 'react', slug: 'react', name: 'React' },
       title: 'React Server Components Today',
       description:
         'React Server Components enable efficient data fetching and lightweight rendering.',
-      href: '#',
     },
   ]);
 

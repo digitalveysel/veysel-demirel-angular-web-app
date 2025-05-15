@@ -1,19 +1,13 @@
 import { ICategory } from './category.model';
 import { IListItem } from './list.model';
 
-export interface IArticleSummary {
-  id: string;
-  category: ICategory;
-  title: string;
-  description: string;
-  href: string;
-}
-
 export interface IArticle {
   id: string;
   title: string;
   description: string;
-  sections: ISection[];
+  slug: string;
+  category: ICategory;
+  sections?: ISection[];
   tags?: string[];
 }
 
@@ -65,7 +59,7 @@ export interface ILinkRun extends IBaseRun {
 }
 
 export interface IBaseBlock {
-  id?: string;
+  id: string;
   type: 'title' | 'paragraph' | 'blockquote' | 'list' | 'image' | 'code';
   attributes?: Record<string, string>;
 }

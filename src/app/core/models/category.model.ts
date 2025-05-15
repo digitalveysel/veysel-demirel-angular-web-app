@@ -4,6 +4,7 @@ export enum ICategories {
 
 export interface ICategory {
   id: string;
+  slug: string;
   name: string;
   isActive?: boolean;
 }

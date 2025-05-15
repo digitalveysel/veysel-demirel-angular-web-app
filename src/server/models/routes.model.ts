@@ -1,4 +1,4 @@
-export enum Roots {
+export enum Routes {
   BASE = '/api',
   ARTICLES = '/articles',
   ARTICLES_SUMMARY = '/summary',

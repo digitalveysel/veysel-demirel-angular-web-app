@@ -23,7 +23,7 @@ import { ICategory } from '../../../core/models/category.model';
             role="tab"
             aria-selected="true"
             class="font-semibold  {{ category?.isActive && 'text-orange-500' }}"
-            (click)="onClick(category.id)"
+            (click)="onClick(category.slug)"
           >
             {{ category.name }}
           </button>
@@ -40,10 +40,10 @@ export class CategoriesComponent {
   vdChange = output<string>();
   $categories = signal<ICategory[]>([]);
 
-  onClick(id: string): void {
+  onClick(slug: string): void {
     this.$categories.update((categories) => {
-      return categories.map((category) => ({ ...category, isActive: id === category.id }));
+      return categories.map((category) => ({ ...category, isActive: slug === category.slug }));
     });
-    this.vdChange.emit(id);
+    this.vdChange.emit(slug);
   }
 }

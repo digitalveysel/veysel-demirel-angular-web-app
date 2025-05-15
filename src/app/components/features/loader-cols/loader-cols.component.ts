@@ -5,8 +5,12 @@ import {
   ViewChildren,
   ViewChild,
   afterNextRender,
+  signal,
 } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { animate, stagger } from 'motion';
+import { filter } from 'rxjs';
+import { AppStore } from '../../../core/store/app.store';
 
 @Component({
   selector: 'vd-loader-cols',
@@ -48,27 +52,74 @@ export class LoaderColsComponent {
   @ViewChildren('bg') private bgRefs!: QueryList<ElementRef<HTMLSpanElement>>;
   @ViewChildren('border') private borderRefs!: QueryList<ElementRef<HTMLSpanElement>>;
 
-  constructor() {
-    afterNextRender(() => {
-      // Container animation
-      animate(this.containerRef.nativeElement, { zIndex: -1 }, { ease: 'easeOut', delay: 0.8 });
+  $lastUrl = signal<string>('');
 
-      // Line animation
-      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.8 });
+  constructor(
+    private router: Router,
+    private store: AppStore,
+  ) {
+    afterNextRender(async () => {
+      await this.leaveAnimation();
+      this.$lastUrl.set(this.router.url);
+      this.routerListener();
+    });
+  }
 
-      // Borders animations
+  private routerListener(): void {
+    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(async (e) => {
+      const lastBaseUrl = this.$lastUrl().split('#')[0];
+      const nextBaseUrl = e.url.split('#')[0];
+
+      if (lastBaseUrl !== nextBaseUrl) {
+        this.store.setActiveSection('');
+        await this.enterAnimation();
+        await this.leaveAnimation();
+      }
+
+      this.$lastUrl.set(e.url);
+    });
+  }
+
+  private async leaveAnimation(): Promise<void> {
+    await Promise.all([
+      animate(this.containerRef.nativeElement, { zIndex: -1 }, { ease: 'easeOut', delay: 0.8 })
+        .finished,
+
+      animate(this.lineRef.nativeElement, { top: '100%' }, { ease: 'easeInOut', duration: 0.8 })
+        .finished,
+
       animate(
         this.borderRefs.map((el) => el.nativeElement),
         { height: '100%' },
         { ease: 'easeOut', duration: 0.2, delay: stagger(0.1, { startDelay: 0.8 }) },
-      );
+      ).finished,
 
-      // Backgrounds animations
       animate(
         this.bgRefs.map((el) => el.nativeElement),
         { height: '0' },
         { ease: 'easeOut', duration: 0.2, delay: stagger(0.1) },
-      );
-    });
+      ).finished,
+    ]);
+  }
+
+  private async enterAnimation(): Promise<void> {
+    await Promise.all([
+      animate(this.containerRef.nativeElement, { zIndex: 8 }, { ease: 'easeOut' }).finished,
+
+      animate(this.lineRef.nativeElement, { top: '-100%' }, { ease: 'easeInOut', duration: 0.8 })
+        .finished,
+
+      animate(
+        this.borderRefs.map((el) => el.nativeElement),
+        { height: '100%' },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.1) },
+      ).finished,
+
+      animate(
+        this.bgRefs.map((el) => el.nativeElement),
+        { height: '100%' },
+        { ease: 'easeOut', duration: 0.2, delay: stagger(0.1) },
+      ).finished,
+    ]);
   }
 }

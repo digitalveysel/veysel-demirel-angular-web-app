@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 import { CategoriesComponent } from '../../ui/categories/categories.component';
 import { ArticleCardComponent } from '../../ui/article-card/article-card.component';
@@ -6,34 +6,50 @@ import { ICategories, ICategory } from '../../../core/models/category.model';
 import { IArticle } from '../../../core/models/article.model';
 import { AnimationDirective } from '../../../directives/animation/animation.directive';
 import { IAnimationTypes } from '../../../core/models/animation.model';
+import { Observable } from 'rxjs';
+import { ArticleService } from '../../../core/services/article/article.service';
+import { AsyncPipe } from '@angular/common';
+import { FilterArticlesByCategoryPipe } from '../../../pipes/filter-articles-by-category/filter-articles-by-category.pipe';
 
 @Component({
   selector: 'vd-articles-section',
-  imports: [ScrollSpyDirective, CategoriesComponent, ArticleCardComponent, AnimationDirective],
-  template: `<section
-    id="articles"
-    aria-label="Articles Content"
-    class="flex flex-col gap-y-6 pb-12 lg:gap-y-9 lg:pb-16"
-    vdScrollSpy
-  >
-    <vd-categories [vdCategories]="categories" (vdChange)="onCategoryChange($event)" />
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
-      @for (article of $fArticles(); track article.id; let index = $index) {
-        <vd-article-card
-          vdClass="opacity-0 h-full"
-          [vdArticle]="article"
-          [vdAnimation]="{
-            type: animationTypes.PURE,
-            selector: '#' + article.id,
-            keyframes: { opacity: [0, 1], y: [20, 0] },
-            options: { duration: 0.5, delay: index * 0.1 },
-          }"
-        />
-      }
-    </div>
-  </section>`,
+  imports: [
+    ScrollSpyDirective,
+    CategoriesComponent,
+    ArticleCardComponent,
+    AnimationDirective,
+    FilterArticlesByCategoryPipe,
+    AsyncPipe,
+  ],
+  template: `
+    <section
+      id="articles"
+      aria-label="Articles Content"
+      class="flex flex-col gap-y-6 pb-12 lg:gap-y-9 lg:pb-16"
+      vdScrollSpy
+    >
+      <vd-categories [vdCategories]="categories" (vdChange)="onCategoryChange($event)" />
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-9">
+        @let articles = articles$ | vdFilterArticlesByCategory: $sCategory() | async;
+        @if (articles) {
+          @for (article of articles; track article.id; let index = $index) {
+            <vd-article-card
+              vdClass="h-full"
+              [vdArticle]="article"
+              [vdAnimation]="{
+                type: animationTypes.PURE,
+                selector: '#' + article.slug,
+                keyframes: { opacity: [0, 1], y: [20, 0] },
+                options: { duration: 0.5, delay: index * 0.1 },
+              }"
+            />
+          }
+        }
+      </div>
+    </section>
+  `,
 })
-export class ArticlesSectionComponent {
+export class ArticlesSectionComponent implements OnInit {
   categories: ICategory[] = [
     { id: ICategories.ALL, slug: ICategories.ALL, name: 'All', isActive: true },
     { id: 'tailwindCSS', slug: 'tailwindCSS', name: 'Tailwind CSS' },
@@ -43,48 +59,22 @@ export class ArticlesSectionComponent {
     { id: 'react', slug: 'react', name: 'React' },
     { id: 'nextjs', slug: 'nextjs', name: 'Next.js' },
   ];
-  $articles = signal<IArticle[]>([
-    {
-      id: 'tailwindJITForInstantStyling',
-      slug: 'tailwindJITForInstantStyling',
-      category: { id: 'tailwindCSS', slug: 'tailwindCSS', name: 'Tailwind CSS' },
-      title: 'Tailwind JIT for Instant Styling',
-      description: 'Use Tailwind’s JIT compiler for instant, custom utility classes.',
-    },
-    {
-      id: 'whatsNewInTypeScript',
-      slug: 'whatsNewInTypeScript',
-      category: { id: 'typescript', slug: 'typescript', name: 'TypeScript' },
-      title: 'What’s New in TypeScript 5.1',
-      description:
-        'Check out TypeScript 5.1’s tuple updates, export checks, and better type inference.',
-    },
-    {
-      id: 'zonelessSSRInAngular19',
-      slug: 'zonelessSSRInAngular19',
-      category: { id: 'angular', slug: 'angular', name: 'Angular' },
-      title: 'Zoneless SSR in Angular 19',
-      description: 'Angular 19’s zone-free SSR boosts performance and simplifies server setup.',
-    },
-    {
-      id: 'reactServerComponentsToday',
-      slug: 'reactServerComponentsToday',
-      category: { id: 'react', slug: 'react', name: 'React' },
-      title: 'React Server Components Today',
-      description:
-        'React Server Components enable efficient data fetching and lightweight rendering.',
-    },
-  ]);
 
   animationTypes = IAnimationTypes;
+  articles$!: Observable<IArticle[]>;
   $sCategory = signal<string>(ICategories.ALL);
-  $fArticles = computed(() =>
-    this.$sCategory() === ICategories.ALL
-      ? this.$articles()
-      : this.$articles().filter((a) => a.category.id === this.$sCategory()),
-  );
+
+  constructor(private articleService: ArticleService) {}
+
+  ngOnInit(): void {
+    this.getArticlesSummary();
+  }
 
   onCategoryChange($event: string): void {
     this.$sCategory.set($event);
+  }
+
+  private getArticlesSummary(): void {
+    this.articles$ = this.articleService.getAllSummary();
   }
 }

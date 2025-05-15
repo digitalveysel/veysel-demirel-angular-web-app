@@ -12,12 +12,12 @@ import { Component, Input } from '@angular/core';
         </h1>
       }
       @case ('h2') {
-        <h2 class="text-24px mb-3 font-semibold lowercase first-letter:uppercase">
+        <h2 class="text-20px mb-3 font-semibold lowercase first-letter:uppercase">
           {{ vdText }}
         </h2>
       }
       @case ('h3') {
-        <h3 class="text-20px mb-3 font-semibold lowercase first-letter:uppercase">
+        <h3 class="text-16px mb-3 font-semibold lowercase first-letter:uppercase">
           {{ vdText }}
         </h3>
       }
@@ -32,7 +32,7 @@ import { Component, Input } from '@angular/core';
         </h5>
       }
       @case ('h6') {
-        <h6 class="text-16px mb-3 lowercase first-letter:uppercase">
+        <h6 class="text-12px mb-3 lowercase first-letter:uppercase">
           {{ vdText }}
         </h6>
       }

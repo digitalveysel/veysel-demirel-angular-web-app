@@ -3,7 +3,6 @@ import { ListComponent } from '../../components/ui/list/list.component';
 import { TitleComponent } from '../../components/ui/title/title.component';
 import { BlockquoteComponent } from '../../components/ui/blockquote/blockquote.component';
 import { IArticle, IBlockTypes, IRunTypes } from '../../core/models/article.model';
-import { AnimationDirective } from '../../directives/animation/animation.directive';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../../core/services/article/article.service';
 import { Observable } from 'rxjs';
@@ -11,27 +10,17 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'vd-article-page',
-  imports: [ListComponent, TitleComponent, BlockquoteComponent, AnimationDirective, AsyncPipe],
+  imports: [ListComponent, TitleComponent, BlockquoteComponent, AsyncPipe],
   template: `
-    @let article = $article | async;
-    @if (article) {
-      <article>
+    @let article = article$ | async;
+    <article class="min-h-dvh">
+      @if (article) {
         <vd-title vdLevel="h1" [vdText]="article.title" />
         <div class="mb-12 space-y-9 border border-neutral-600 bg-neutral-800 p-6 lg:mb-16">
           @for (section of article.sections; track section.id) {
             <section class="space-y-6">
               @for (block of section.blocks; track block.id) {
-                <div
-                  [class]="{ 'first:mb-0': block.type === blockTypes.TITLE }"
-                  [vdAnimation]="{
-                    type: 'inView',
-                    keyframes: {
-                      opacity: [0, 1],
-                    },
-                    options: { duration: 1 },
-                    callbackKeyframes: { opacity: 0 },
-                  }"
-                >
+                <div [class]="{ 'first:mb-0': block.type === blockTypes.TITLE }">
                   @switch (block.type) {
                     @case (blockTypes.TITLE) {
                       <vd-title [vdLevel]="block.data.level" [vdText]="block.data.text" />
@@ -85,14 +74,14 @@ import { AsyncPipe } from '@angular/common';
             </section>
           }
         </div>
-      </article>
-    }
+      }
+    </article>
   `,
 })
 export class ArticlePageComponent implements OnInit {
   blockTypes = IBlockTypes;
   runTypes = IRunTypes;
-  $article!: Observable<IArticle>;
+  article$!: Observable<IArticle>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -100,7 +89,11 @@ export class ArticlePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getArticle();
+  }
+
+  private getArticle(): void {
     const slug = this.activatedRoute.snapshot.paramMap.get('slug') || '';
-    this.$article = this.articleService.getBySlug(slug);
+    this.article$ = this.articleService.getBySlug(slug);
   }
 }

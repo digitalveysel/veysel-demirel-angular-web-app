@@ -7,14 +7,14 @@ import { RouterLink } from '@angular/router';
   selector: 'vd-article-card',
   imports: [BadgeComponent, RouterLink],
   template: `<article
-    id="{{ vdArticle.id }}"
+    id="{{ vdArticle.slug }}"
     class="flex flex-col gap-4 border border-neutral-600 bg-neutral-800 p-6 {{ vdClass }}"
   >
     <vd-badge [vdText]="vdArticle.category.name" />
     <div class="space-y-2">
       <h3 class="font-semibold">{{ vdArticle.title }}</h3>
       <p class="text-14px">{{ vdArticle.description }}</p>
-      <a routerLink="{{ 'article/' + vdArticle.slug }}" class="text-14px font-bold"> Read more </a>
+      <a [routerLink]="vdArticle.slug" class="text-14px font-bold"> Read more </a>
     </div>
   </article>`,
 })

@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import ArticleService from '../services/article.service';
 import { Article } from '../models/article.model';
 import { DeleteResult, InsertOneResult, WithId } from 'mongodb';
-import { Roots } from '../models/roots.model';
+import { Routes } from '../models/routes.model';
 
 class ArticleController {
   public router = Router();
@@ -14,11 +14,11 @@ class ArticleController {
 
   private init(): void {
     this.router.get('/', this.getAll.bind(this));
-    this.router.get(`${Roots.ARTICLES_SUMMARY}`, this.getAllSummary.bind(this));
-    this.router.get(`${Roots.ARTICLES_ID}`, this.getBySlug.bind(this));
+    this.router.get(`${Routes.ARTICLES_SUMMARY}`, this.getAllSummary.bind(this));
+    this.router.get(`${Routes.ARTICLES_ID}`, this.getBySlug.bind(this));
     this.router.post('/', this.create.bind(this));
     this.router.put('/', this.update.bind(this));
-    this.router.delete(`${Roots.ARTICLES_ID}`, this.remove.bind(this));
+    this.router.delete(`${Routes.ARTICLES_ID}`, this.remove.bind(this));
   }
 
   private async getAll(_req: Request, res: Response<Article[]>, next: NextFunction): Promise<void> {

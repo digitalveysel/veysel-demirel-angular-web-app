@@ -7,6 +7,7 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   ViewChild,
+  signal,
 } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT, NgClass } from '@angular/common';
 import { animate, frame, motionValue } from 'motion';
@@ -32,6 +33,8 @@ import { AppStore } from '../../../core/store/app.store';
 export class CustomCursorComponent implements OnInit, AfterViewInit {
   @ViewChild('cursorEl', { static: false }) private cursorRef!: ElementRef<HTMLSpanElement>;
 
+  $lastHoveredEl = signal<boolean>(false);
+
   private hasFinePointer = false;
   private pointerX = motionValue(0);
   private pointerY = motionValue(0);
@@ -52,26 +55,23 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (!this.hasFinePointer) return;
     this.initMainAnimation();
-    this.handleMove();
-    this.handleHover();
+    this.addMoveListener();
   }
 
-  private handleHover(): void {
-    const linkElements = this.document.querySelectorAll('a, button');
-    linkElements.forEach((el) => {
-      el.addEventListener('mouseenter', () => this.onElementHover(true));
-      el.addEventListener('mouseleave', () => this.onElementHover(false));
-    });
-  }
-
-  private handleMove(): void {
+  private addMoveListener(): void {
     this.document.addEventListener('pointermove', this.pointerMoveHandler);
   }
 
-  private onElementHover(isHovering: boolean): void {
-    animate(this.cursorRef.nativeElement, {
-      scale: isHovering ? 2 : 1,
-    });
+  private onElementHover(e: PointerEvent): void {
+    const target = e.target as HTMLElement;
+    const isHovering = !!target.closest('a, button');
+
+    if (this.$lastHoveredEl() !== isHovering) {
+      animate(this.cursorRef.nativeElement, {
+        scale: isHovering ? 2 : 1,
+      });
+      this.$lastHoveredEl.set(isHovering);
+    }
   }
 
   private initMainAnimation(): void {
@@ -103,5 +103,6 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
   private onPointerMove(e: PointerEvent): void {
     this.pointerX.set(e.clientX);
     this.pointerY.set(e.clientY);
+    this.onElementHover(e);
   }
 }

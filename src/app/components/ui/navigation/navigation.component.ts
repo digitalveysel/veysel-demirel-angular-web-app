@@ -5,7 +5,7 @@ import { SoundService } from '../../../core/services/sound/sound.service';
 
 interface IMenuItem {
   id: string;
-  link: string;
+  fragment: string;
   name: string;
 }
 
@@ -19,19 +19,18 @@ interface IMenuItem {
   >
     <ul class="flex flex-col gap-y-4 p-5 lg:flex-row lg:p-0">
       @for (item of navItems; track item.id) {
+        @let isActive = store.activeSection() === item.fragment;
         <li>
           <a
             [id]="item.id"
             routerLink=""
-            [fragment]="item.link"
+            [fragment]="item.fragment"
             class="block border border-neutral-600 px-3 py-2 lg:px-3 lg:border-none {{
-              store.activeSection() === item.link
-                ? 'text-neutral-100 font-bold'
-                : 'text-neutral-200'
+              isActive ? 'text-neutral-100 font-bold' : 'text-neutral-200'
             }}"
-            (click)="onClick(item.link)"
+            (click)="onClick(item.fragment)"
           >
-            {{ (store.activeSection() === item.link ? '#' : '') + item.name }}
+            {{ (isActive ? '#' : '') + item.name }}
           </a>
         </li>
       }
@@ -42,22 +41,22 @@ export class NavigationComponent {
   navItems: IMenuItem[] = [
     {
       id: 'heroAnchor',
-      link: 'hero',
+      fragment: 'hero',
       name: 'hero',
     },
     {
       id: 'techStackAnchor',
-      link: 'techStack',
+      fragment: 'techStack',
       name: 'tech stack',
     },
     {
       id: 'coreSpecialitiesAnchor',
-      link: 'coreSpecialities',
+      fragment: 'coreSpecialities',
       name: 'core specialities',
     },
     {
       id: 'skillHighlightsAnchor',
-      link: 'skillHighlights',
+      fragment: 'skillHighlights',
       name: 'skill highlights',
     },
   ];
@@ -67,14 +66,11 @@ export class NavigationComponent {
     private soundService: SoundService,
   ) {}
 
-  onClick(link: string): void {
-    console.log(link);
+  onClick(fragment: string): void {
     this.store.setIsMenuOpen(false);
 
-    if (link != this.store.activeSection()) {
+    if (this.store.activeSection() != fragment) {
       this.soundService.play('scroll');
     }
-
-    this.store.setActiveSection(link);
   }
 }

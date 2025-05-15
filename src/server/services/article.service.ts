@@ -1,7 +1,8 @@
 import Joi from 'joi';
 import { Collection, DeleteResult, InsertOneResult, WithId } from 'mongodb';
-import { Article, Section, Block, Category } from '../models/article.model';
+import { Article, Section, Block } from '../models/article.model';
 import Database from '../database';
+import { Category } from '../models/category.model';
 
 const categorySchema = Joi.object<Category>({
   id: Joi.string().required(),
@@ -77,13 +78,13 @@ class ArticleService {
 
   public async findBySlug(payload: string): Promise<WithId<Article> | null> {
     return this.collection.findOne(
-      { id: payload },
+      { slug: payload },
       {
         projection: {
           id: 1,
+          slug: 1,
           title: 1,
           description: 1,
-          slug: 1,
           category: 1,
           sections: 1,
           tags: 1,

@@ -1,3 +1,6 @@
+import { Category } from './category.model';
+import { List } from './list.model';
+
 export interface Article {
   id: string;
   title: string;
@@ -6,12 +9,6 @@ export interface Article {
   category: Category;
   sections?: Section[];
   tags?: string[];
-}
-
-export interface Category {
-  id: string;
-  slug: string;
-  name: string;
 }
 
 export interface Section {
@@ -58,12 +55,7 @@ export interface BlockquoteBlock extends BaseBlock {
 
 export interface ListBlock extends BaseBlock {
   type: 'list';
-  data: {
-    icon: string;
-    items: {
-      text: string;
-    }[];
-  };
+  data: List;
 }
 
 export interface ImageBlock extends BaseBlock {

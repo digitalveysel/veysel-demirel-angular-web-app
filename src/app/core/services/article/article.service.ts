@@ -15,7 +15,7 @@ export class ArticleService {
     return this.http.get<IArticle[]>(this.URL);
   }
 
-  getById(id: string): Observable<IArticle> {
-    return this.http.get<IArticle>(`${this.URL}/${id}`);
+  getBySlug(slug: string): Observable<IArticle> {
+    return this.http.get<IArticle>(`${this.URL}/${slug}`);
   }
 }

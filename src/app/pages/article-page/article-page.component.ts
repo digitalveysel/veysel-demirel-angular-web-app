@@ -100,7 +100,7 @@ export class ArticlePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id') || '';
-    this.$article = this.articleService.getById(id);
+    const slug = this.activatedRoute.snapshot.paramMap.get('slug') || '';
+    this.$article = this.articleService.getBySlug(slug);
   }
 }

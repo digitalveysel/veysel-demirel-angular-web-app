@@ -11,7 +11,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomePageComponent },
-      { path: 'article/:id', component: ArticlePageComponent },
+      { path: ':slug', component: ArticlePageComponent },
       {
         path: '**',
         component: NotFoundPageComponent,

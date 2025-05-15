@@ -16,7 +16,7 @@ export class AppStore {
     theme: IThemeValues.DARK,
     isMuted: false,
     isMenuOpen: false,
-    activeSection: '#hero',
+    activeSection: 'hero',
   });
 
   readonly cursorLabel = computed(() => this.$state().cursorLabel);

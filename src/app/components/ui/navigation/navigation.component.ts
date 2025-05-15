@@ -41,9 +41,9 @@ interface IMenuItem {
 export class NavigationComponent {
   navItems: IMenuItem[] = [
     {
-      id: 'articlesAnchor',
-      link: 'articles',
-      name: 'articles',
+      id: 'heroAnchor',
+      link: 'hero',
+      name: 'hero',
     },
     {
       id: 'techStackAnchor',
@@ -68,6 +68,7 @@ export class NavigationComponent {
   ) {}
 
   onClick(link: string): void {
+    console.log(link);
     this.store.setIsMenuOpen(false);
 
     if (link != this.store.activeSection()) {

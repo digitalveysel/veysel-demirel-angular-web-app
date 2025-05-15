@@ -3,19 +3,9 @@ import { resolve } from 'path';
 import Joi from 'joi';
 import Logger from '../utils/logger.utils';
 
-interface AppConfig {
-  MONGO_URI: string;
-  DB_NAME: string;
-  PORT: number;
-}
+interface AppConfig {}
 
-const schema = Joi.object<AppConfig>({
-  MONGO_URI: Joi.string().uri().required(),
-  DB_NAME: Joi.string().min(1).required(),
-  PORT: Joi.number().port().required(),
-})
-  .unknown()
-  .required();
+const schema = Joi.object<AppConfig>({}).unknown().required();
 
 class Config {
   public readonly values: AppConfig;
@@ -29,11 +19,7 @@ class Config {
       process.exit(1);
     }
     Logger.info('[Config] Loaded configuration');
-    this.values = {
-      MONGO_URI: value.MONGO_URI,
-      DB_NAME: value.DB_NAME,
-      PORT: value.PORT,
-    };
+    this.values = {};
   }
 
   public static getInstance(): Config {

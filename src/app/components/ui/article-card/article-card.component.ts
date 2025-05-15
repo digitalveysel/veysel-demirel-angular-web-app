@@ -8,14 +8,18 @@ import { RouterLink } from '@angular/router';
   imports: [BadgeComponent, RouterLink],
   template: `<article
     id="{{ vdArticle.slug }}"
-    class="flex flex-col gap-4 border border-neutral-600 bg-neutral-800 p-6 {{ vdClass }}"
+    class="flex flex-col gap-y-4 justify-between border border-neutral-600 bg-neutral-800 p-6 {{
+      vdClass
+    }}"
   >
-    <vd-badge [vdText]="vdArticle.category.name" />
-    <div class="space-y-2">
-      <h3 class="font-semibold">{{ vdArticle.title }}</h3>
-      <p class="text-14px">{{ vdArticle.description }}</p>
-      <a [routerLink]="vdArticle.slug" class="text-14px font-bold"> Read more </a>
+    <div class="flex flex-col gap-y-4">
+      <vd-badge [vdText]="vdArticle.category.name" />
+      <div class="space-y-2">
+        <h3 class="line-clamp-2 font-semibold">{{ vdArticle.title }}</h3>
+        <p class="text-14px line-clamp-3">{{ vdArticle.description }}</p>
+      </div>
     </div>
+    <a [routerLink]="vdArticle.slug" class="text-14px font-bold"> Read more </a>
   </article>`,
 })
 export class ArticleCardComponent {

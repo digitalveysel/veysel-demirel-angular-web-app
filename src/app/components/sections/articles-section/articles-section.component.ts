@@ -52,7 +52,7 @@ import { FilterArticlesByCategoryPipe } from '../../../pipes/filter-articles-by-
 export class ArticlesSectionComponent implements OnInit {
   categories: ICategory[] = [
     { id: ICategories.ALL, slug: ICategories.ALL, name: 'All', isActive: true },
-    { id: 'tailwindCSS', slug: 'tailwindCSS', name: 'Tailwind CSS' },
+    { id: 'tailwindCSS', slug: 'tailwindcss', name: 'Tailwind CSS' },
     { id: 'javascript', slug: 'javascript', name: 'JavaScript' },
     { id: 'typescript', slug: 'typescript', name: 'TypeScript' },
     { id: 'angular', slug: 'angular', name: 'Angular' },

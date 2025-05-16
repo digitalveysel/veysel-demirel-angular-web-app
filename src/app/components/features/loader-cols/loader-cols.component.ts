@@ -65,7 +65,7 @@ export class LoaderColsComponent {
     animate(
       this.bgRefs.map((el) => el.nativeElement),
       { height: '0' },
-      { ease: 'easeOut', duration: 0.2, delay: stagger(0.1) },
+      { ease: 'easeOut', duration: 0.4, delay: stagger(0.1) },
     );
   }
 }

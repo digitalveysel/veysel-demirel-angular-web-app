@@ -16,8 +16,8 @@ import { MusicPlayerSectionComponent } from '../../components/sections/music-pla
   ],
   template: `<vd-hero-section />
     <vd-music-player-section />
-    <vd-tech-stack-section />
     <vd-core-specialities-section />
+    <vd-tech-stack-section />
     <vd-skill-highlights-section />`,
 })
 export class HomePageComponent {}

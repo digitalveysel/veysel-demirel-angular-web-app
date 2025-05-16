@@ -8,7 +8,7 @@ import { IconService } from '../../../core/services/icon/icon.service';
   template: `<div role="img" [innerHTML]="$svg()" [class]="vdClass"></div>`,
 })
 export class IconComponent implements OnInit {
-  @Input() vdName = 'widgets';
+  @Input({ required: true }) vdName = 'widgets';
   @Input() vdSize = '';
   @Input() vdClass = '';
 

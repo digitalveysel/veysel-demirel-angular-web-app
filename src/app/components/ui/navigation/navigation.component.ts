@@ -45,14 +45,14 @@ export class NavigationComponent {
       name: 'hero',
     },
     {
-      id: 'techStackAnchor',
-      fragment: 'techStack',
-      name: 'tech stack',
-    },
-    {
       id: 'coreSpecialitiesAnchor',
       fragment: 'coreSpecialities',
       name: 'core specialities',
+    },
+    {
+      id: 'techStackAnchor',
+      fragment: 'techStack',
+      name: 'tech stack',
     },
     {
       id: 'skillHighlightsAnchor',

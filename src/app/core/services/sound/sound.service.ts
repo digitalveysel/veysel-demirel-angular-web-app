@@ -48,6 +48,8 @@ export class SoundService {
       audio.currentTime = 0;
     }
 
+    audio.volume = this.store.isMuted() ? 0 : 1;
+
     try {
       await audio.play();
     } catch (err) {

@@ -9,7 +9,7 @@ import { ISpeciality } from '../../../core/models/speciality.model';
   template: `<section
     id="coreSpecialities"
     aria-label="Core Specialities Content"
-    class="space-y-4 py-12 lg:py-16"
+    class="space-y-4 py-12 lg:pb-16"
     vdScrollSpy
   >
     <h2 class="font-montserrat-alternates text-24px font-semibold xl:pl-4">Core specialities</h2>

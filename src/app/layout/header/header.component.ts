@@ -17,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
     NavigationComponent,
   ],
   template: `<header
-    class="sticky top-0 flex items-center justify-center gap-x-2 z-7 xl:gap-x-4 px-5 py-3 xl:px-10 xl:py-5 {{
+    class="sticky top-0 flex items-center justify-center gap-x-2 z-6 xl:gap-x-4 px-5 py-3 xl:px-10 xl:py-5 {{
       $isSticky() || store.isMenuOpen() ? 'bg-neutral-800' : 'bg-transparent'
     }}"
   >

@@ -5,7 +5,7 @@ import { AppStore } from '../../store/app.store';
   providedIn: 'root',
 })
 export class SoundService {
-  private cache: Record<string, HTMLAudioElement> = {};
+  cache: Record<string, HTMLAudioElement> = {};
 
   constructor(private store: AppStore) {
     afterNextRender(() => {
@@ -33,19 +33,20 @@ export class SoundService {
     this.setIsMuted(!this.store.isMuted());
   }
 
-  async play(name: string, skipMutedCheck = false): Promise<void> {
-    if (this.store.isMuted() && !skipMutedCheck) {
+  async play(name: string, skipIsMutedCheck = false, resetCurrentTime = true): Promise<void> {
+    if (this.store.isMuted() && !skipIsMutedCheck) {
       return;
     }
 
     let audio: HTMLAudioElement | undefined = this.cache[name];
 
-    if (!audio) {
-      audio = new Audio(`/sounds/${name}.mp3`);
-      this.cache[name] = audio;
+    if (!this.cache[name]) {
+      audio = this.setCache(name);
     }
 
-    audio.currentTime = 0;
+    if (resetCurrentTime) {
+      audio.currentTime = 0;
+    }
 
     try {
       await audio.play();
@@ -55,12 +56,17 @@ export class SoundService {
     }
   }
 
-  stop(name: string): void {
+  pause(name: string): void {
     const audio = this.cache[name];
 
     if (audio) {
       audio.pause();
-      audio.currentTime = 0;
     }
+  }
+
+  setCache(name: string): HTMLAudioElement {
+    const audio = new Audio(`/sounds/${name}.mp3`);
+    this.cache[name] = audio;
+    return audio;
   }
 }

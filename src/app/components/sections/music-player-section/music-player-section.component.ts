@@ -7,7 +7,7 @@ import { MusicPlayerComponent } from '../../features/music-player/music-player.c
   template: `<section
     id="musicPlayer"
     aria-label="Music Player Content"
-    class="space-y-4 py-12 lg:pb-16"
+    class="space-y-4 pb-12 lg:pb-16"
   >
     <vd-music-player />
   </section>`,

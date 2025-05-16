@@ -7,4 +7,10 @@
   .scroll-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .cursor-pointer-svg {
+    cursor:
+      url('/cursors/pointer.svg') 8 8,
+      pointer;
+  }
 }

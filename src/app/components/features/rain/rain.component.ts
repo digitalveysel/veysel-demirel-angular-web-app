@@ -1,8 +1,8 @@
-import { afterNextRender, Component, signal } from '@angular/core';
+import { afterNextRender, Component, Inject, signal } from '@angular/core';
 import { AppStore } from '../../../core/store/app.store';
 import { IAnimation } from '../../../core/models/animation.model';
 import { AnimationDirective } from '../../../directives/animation/animation.directive';
-import { NgStyle } from '@angular/common';
+import { DOCUMENT, NgStyle } from '@angular/common';
 
 interface IDrop {
   left: string;
@@ -42,16 +42,20 @@ interface IGlob {
 export class RainComponent {
   globs = signal<IGlob[]>([]);
 
-  constructor(public store: AppStore) {
+  constructor(
+    public store: AppStore,
+    @Inject(DOCUMENT) private document: Document,
+  ) {
     afterNextRender(() => {
       this.onRain();
     });
   }
 
   onRain(): void {
+    const dropCount = Math.floor((this.document?.defaultView?.innerWidth || 100) / 10);
     this.globs.set([]);
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < dropCount; i++) {
       const rDelay = this.getRandomNumber(1, 100) / 5;
       const rDuration = this.getRandomNumber(4, 5);
       const rPosition = this.getRandomNumber(1, 100);

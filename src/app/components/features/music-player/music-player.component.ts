@@ -11,6 +11,7 @@ import { AppStore } from '../../../core/store/app.store';
     <div class="flex flex-col gap-y-4" #audio>
       <button
         class="flex h-3 bg-neutral-700"
+        aria-label="Progress Slider"
         (click)="onClickProgress($event)"
         (pointermove)="onPointerMoveProgress($event)"
         (pointerdown)="onPointerDownProgress()"
@@ -25,14 +26,22 @@ import { AppStore } from '../../../core/store/app.store';
       </button>
       <div class="flex items-end justify-between">
         <div class="flex gap-x-2">
-          <button class="light:text-orange-600 size-10 text-orange-300" (click)="onClickPlayer()">
+          <button
+            class="light:text-orange-600 size-10 text-orange-300"
+            (click)="onClickPlayer()"
+            [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
+          >
             @if (isPlaying()) {
               <vd-icon vdName="pause" vdSize="40" />
             } @else {
               <vd-icon vdName="play" vdSize="40" />
             }
           </button>
-          <button class="light:text-orange-600 size-10 text-orange-300" (click)="onClickMuted()">
+          <button
+            class="light:text-orange-600 size-10 text-orange-300"
+            (click)="onClickMuted()"
+            [attr.aria-label]="store.isMuted() ? 'Unmute' : 'Mute'"
+          >
             @if (store.isMuted()) {
               <vd-icon vdName="sound-off-square" vdSize="40" />
             } @else {
@@ -40,7 +49,9 @@ import { AppStore } from '../../../core/store/app.store';
             }
           </button>
         </div>
-        <div class="text-20px font-kumar-one flex gap-x-1 font-semibold text-neutral-300">
+        <div
+          class="text-16px lg:text-20px font-kumar-one flex gap-x-1 font-semibold text-neutral-300"
+        >
           <span>{{ currentTime() }}</span
           >/<span>03:26</span>
         </div>

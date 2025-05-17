@@ -19,7 +19,7 @@ interface IGlob {
   selector: 'vd-rain',
   imports: [AnimationDirective, NgStyle],
   template: ` @if (store.isRainy()) {
-    <div class="pointer-events-none fixed inset-0 z-8 select-none">
+    <div class="pointer-events-none fixed inset-0 z-8 select-none" aria-hidden="true">
       @for (glob of globs(); track $index) {
         <div
           class="-translate-y absolute -top-12 h-12 w-4"

@@ -59,6 +59,11 @@ export class NavigationComponent {
       fragment: 'skillHighlights',
       name: 'skill highlights',
     },
+    {
+      id: 'contactAnchor',
+      fragment: 'contact',
+      name: 'contact',
+    },
   ];
 
   constructor(

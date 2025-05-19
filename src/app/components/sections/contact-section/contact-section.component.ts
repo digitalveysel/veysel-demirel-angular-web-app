@@ -64,10 +64,10 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
       <div class="relative isolate w-fit">
         <button
           type="submit"
-          class="border-2 bg-neutral-800 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus:text-orange-500 focus:outline-none active:border-orange-500 active:text-orange-500 {{
+          class="border-2 bg-neutral-800 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus-visible:text-orange-500 focus-visible:outline-none active:border-orange-500 active:text-orange-500 {{
             $isLoading()
               ? 'border-transparent pointer-events-none'
-              : 'border-neutral-600 focus:border-orange-500'
+              : 'border-neutral-600 focus-visible:border-orange-500'
           }}"
         >
           Send message

@@ -41,9 +41,11 @@ import { ContactService } from '../../../core/services/contact/contact.service';
           [attr.aria-invalid]="checkName"
         />
         @if (checkName) {
-          <small class="text-12px absolute right-0 bg-orange-100 px-2 py-1 text-orange-900"
-            >Check this out!
-          </small>
+          <p
+            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
+          >
+            Check this out!
+          </p>
         }
       </div>
       <div class="relative flex">
@@ -59,9 +61,11 @@ import { ContactService } from '../../../core/services/contact/contact.service';
           [attr.aria-invalid]="checkEmail"
         />
         @if (checkEmail) {
-          <small class="text-12px absolute right-0 bg-orange-100 px-2 py-1 text-orange-900"
-            >Check this out!
-          </small>
+          <p
+            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
+          >
+            Check this out!
+          </p>
         }
       </div>
       <div class="relative flex">
@@ -77,9 +81,11 @@ import { ContactService } from '../../../core/services/contact/contact.service';
           [attr.aria-invalid]="checkMessage"
         ></textarea>
         @if (checkMessage) {
-          <small class="text-12px absolute right-0 bg-orange-100 px-2 py-1 text-orange-900"
-            >Check this out!
-          </small>
+          <p
+            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
+          >
+            Check this out!
+          </p>
         }
       </div>
       <button

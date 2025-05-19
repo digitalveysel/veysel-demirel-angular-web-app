@@ -14,8 +14,8 @@ import {
   template: `
     <p class="text-16px md:text-24px font-semibold italic">
       <span>{{ vdSubject + ' ' }}</span>
-      <span>{{ displayVerb() + ' ' }}</span>
-      <span class="text-orange-500">{{ displayPhrase() }}</span>
+      <span>{{ $displayVerb() + ' ' }}</span>
+      <span class="text-orange-500">{{ $displayPhrase() }}</span>
     </p>
   `,
 })
@@ -35,8 +35,8 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
   private nextUpdateTime = 0;
   private pauseUntil = 0;
 
-  displayVerb = signal('');
-  displayPhrase = signal('');
+  $displayVerb = signal('');
+  $displayPhrase = signal('');
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
@@ -70,11 +70,11 @@ export class TypingAnimationComponent implements AfterViewInit, OnDestroy {
       const current = fullText.slice(0, this.charIndex);
 
       if (this.charIndex <= split) {
-        this.displayVerb.set(current);
-        this.displayPhrase.set('');
+        this.$displayVerb.set(current);
+        this.$displayPhrase.set('');
       } else {
-        this.displayVerb.set(current.slice(0, split));
-        this.displayPhrase.set(current.slice(split + 1));
+        this.$displayVerb.set(current.slice(0, split));
+        this.$displayPhrase.set(current.slice(split + 1));
       }
 
       if (this.direction > 0 && this.charIndex === fullText.length) {

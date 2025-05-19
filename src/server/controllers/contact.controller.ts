@@ -1,13 +1,21 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Contact, contactSchema } from '../models/contact.model';
 import ContactService from '../services/contact.service';
+import { Config } from '../models/config.model';
 
 export default class ContactController {
   private readonly router = Router();
   private readonly service: ContactService;
 
-  constructor(contactService: ContactService) {
-    this.service = contactService;
+  constructor(config: Config) {
+    this.service = new ContactService(
+      config.SMTP_HOST,
+      config.SMTP_PORT,
+      config.SMTP_USER,
+      config.SMTP_PASS,
+      config.HOST_MAIL,
+      config.HOST_NAME,
+    );
     this.initializeRoutes();
   }
 
@@ -24,6 +32,7 @@ export default class ContactController {
     res: Response<Contact>,
     next: NextFunction,
   ): Promise<void> {
+    res.status(200);
     try {
       const { value, error } = contactSchema.validate(req.body, { abortEarly: false });
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { ScrollSpyDirective } from '../../../directives/scroll-spy/scroll-spy.directive';
 import {
   AbstractControl,
@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ContactService } from '../../../core/services/contact/contact.service';
+import { take } from 'rxjs';
+import { IStatusKey, statusMessages } from '../../../core/models/status.model';
 
 @Component({
   selector: 'vd-contact-section',
@@ -25,75 +27,52 @@ import { ContactService } from '../../../core/services/contact/contact.service';
       [formGroup]="cForm"
       (ngSubmit)="onSubmit()"
     >
-      @let checkName = name?.invalid && (name?.dirty || name?.touched);
-      @let checkEmail = email?.invalid && (email?.dirty || email?.touched);
-      @let checkMessage = message?.invalid && (message?.dirty || message?.touched);
-      <div class="relative flex">
-        <label for="name" class="sr-only">Name</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          formControlName="name"
-          placeholder="Name"
-          aria-required="true"
-          [class]="commonClasses"
-          [attr.aria-invalid]="checkName"
-        />
-        @if (checkName) {
-          <p
-            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
-          >
-            Check this out!
-          </p>
-        }
-      </div>
-      <div class="relative flex">
-        <label for="email" class="sr-only">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          formControlName="email"
-          placeholder="Email"
-          aria-required="true"
-          [class]="commonClasses"
-          [attr.aria-invalid]="checkEmail"
-        />
-        @if (checkEmail) {
-          <p
-            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
-          >
-            Check this out!
-          </p>
-        }
-      </div>
-      <div class="relative flex">
-        <label for="Message" class="sr-only">Message</label>
-        <textarea
-          id="message"
-          name="message"
-          formControlName="message"
-          placeholder="Message"
-          aria-required="true"
-          rows="4"
-          class="{{ commonClasses }} resize-none"
-          [attr.aria-invalid]="checkMessage"
-        ></textarea>
-        @if (checkMessage) {
-          <p
-            class="text-12px absolute right-0 bg-orange-100 px-2 py-1 leading-none text-orange-900 after:absolute after:-top-2 after:-right-2 after:size-3 after:bg-orange-900"
-          >
-            Check this out!
-          </p>
-        }
-      </div>
+      <label for="name" class="sr-only">Name</label>
+      <input
+        id="name"
+        type="text"
+        name="name"
+        formControlName="name"
+        placeholder="Name"
+        aria-required="true"
+        [class]="commonClasses"
+        [attr.aria-invalid]="name?.invalid"
+      />
+      <label for="email" class="sr-only">Email</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        formControlName="email"
+        placeholder="Email"
+        aria-required="true"
+        [class]="commonClasses"
+        [attr.aria-invalid]="email?.invalid"
+      />
+      <label for="Message" class="sr-only">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        formControlName="message"
+        placeholder="Message"
+        aria-required="true"
+        rows="4"
+        class="{{ commonClasses }} resize-none"
+        [attr.aria-invalid]="message?.invalid"
+      ></textarea>
       <button
         type="submit"
         class="w-fit border-2 border-neutral-600 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus:border-orange-500 focus:text-orange-500 focus:outline-none active:border-orange-500 active:text-orange-500"
       >
         Send message
       </button>
+      @if ($message()) {
+        <p
+          class="text-12px relative bg-orange-100 px-2 py-1 text-orange-900 selection:bg-orange-500 after:absolute after:-top-2 after:-left-2 after:size-3 after:bg-orange-900"
+        >
+          {{ $message() }}
+        </p>
+      }
     </form>
   </section>`,
 })
@@ -101,6 +80,9 @@ export class ContactSectionComponent implements OnInit {
   commonClasses =
     'border-y-2 border-t-transparent border-b-neutral-600 py-3 placeholder:text-neutral-400 hover:border-b-neutral-400 hover:placeholder:text-neutral-200 focus:border-b-orange-500 focus:outline-none focus:placeholder:opacity-0 grow';
   cForm!: FormGroup;
+  $isLoading = signal<boolean>(false);
+  $status = signal<IStatusKey>('default');
+  $message = computed<string | null>(() => statusMessages[this.$status()]);
 
   get name(): AbstractControl | null {
     return this.cForm.get('name');
@@ -126,15 +108,41 @@ export class ContactSectionComponent implements OnInit {
   onCreate(): void {
     this.cForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+        ],
+      ],
       message: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
   onSubmit(): void {
+    this.$isLoading.set(true);
+    this.$status.set('default');
+
     if (this.cForm.invalid) {
-      this.cForm.markAllAsTouched();
+      this.$status.set('invalid');
       return;
     }
+
+    this.contactService
+      .send(this.cForm.value)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.$status.set('success');
+          this.cForm.reset();
+        },
+        error: () => {
+          this.$status.set('failure');
+        },
+        complete: () => {
+          this.$isLoading.set(false);
+        },
+      });
   }
 }

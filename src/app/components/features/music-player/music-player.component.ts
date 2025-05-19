@@ -3,6 +3,7 @@ import { IconComponent } from '../../ui/icon/icon.component';
 import { SoundService } from '../../../core/services/sound/sound.service';
 import { animate } from 'motion';
 import { AppStore } from '../../../core/store/app.store';
+import { IMusicPlayerKeys } from '../../../core/models/keyboard.model';
 
 @Component({
   selector: 'vd-music-player',
@@ -14,6 +15,7 @@ import { AppStore } from '../../../core/store/app.store';
         role="progressbar"
         class="cursor-pointer-svg flex h-3 bg-neutral-700"
         aria-label="Progress Slider"
+        aria-valuemin="0"
         (click)="onClickProgress($event)"
         (pointermove)="onPointerMoveProgress($event)"
         (pointerdown)="onPointerDownProgress()"
@@ -112,7 +114,6 @@ export class MusicPlayerComponent {
 
   onPointerMoveProgress(event: MouseEvent): void {
     if (this.isMouseDown()) {
-      console.log('true');
       this.onClickProgress(event);
     }
   }
@@ -126,7 +127,20 @@ export class MusicPlayerComponent {
   }
 
   onKeyDownProgress(event: KeyboardEvent): void {
-    console.log(event);
+    switch (event.key) {
+      case IMusicPlayerKeys.SPACE:
+        this.onClickPlayer();
+        event.preventDefault();
+        break;
+      case IMusicPlayerKeys.ARROW_RIGHT:
+        this.audio.currentTime = Math.min(this.audio.currentTime + 1, this.audio.duration);
+        event.preventDefault();
+        break;
+      case IMusicPlayerKeys.ARROW_LEFT:
+        this.audio.currentTime = Math.max(this.audio.currentTime - 1, 0);
+        event.preventDefault();
+        break;
+    }
   }
 
   private pauseAudio(): void {

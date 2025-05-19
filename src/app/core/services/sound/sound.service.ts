@@ -25,7 +25,7 @@ export class SoundService {
     localStorage.setItem('isMuted', JSON.stringify(isMuted));
     this.store.setIsMuted(isMuted);
     Object.values(this.cache).forEach((audio) => {
-      audio.volume = isMuted ? 0 : 1;
+      this.setAudioMuted(audio, isMuted);
     });
   }
 
@@ -48,7 +48,7 @@ export class SoundService {
       audio.currentTime = 0;
     }
 
-    audio.volume = this.store.isMuted() ? 0 : 1;
+    this.setAudioMuted(audio, this.store.isMuted());
 
     try {
       await audio.play();
@@ -70,5 +70,10 @@ export class SoundService {
     const audio = new Audio(`/sounds/${name}.mp3`);
     this.cache[name] = audio;
     return audio;
+  }
+
+  private setAudioMuted(audio: HTMLAudioElement, isMuted: boolean): void {
+    audio.volume = isMuted ? 0 : 1;
+    audio.muted = isMuted;
   }
 }

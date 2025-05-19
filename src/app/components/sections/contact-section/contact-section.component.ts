@@ -10,10 +10,11 @@ import {
 import { ContactService } from '../../../core/services/contact/contact.service';
 import { take } from 'rxjs';
 import { IStatusKey, statusMessages } from '../../../core/models/status.model';
+import { AnimationDirective } from '../../../directives/animation/animation.directive';
 
 @Component({
   selector: 'vd-contact-section',
-  imports: [ScrollSpyDirective, ReactiveFormsModule],
+  imports: [ScrollSpyDirective, ReactiveFormsModule, AnimationDirective],
   template: `<section
     id="contact"
     aria-label="Contact Content"
@@ -60,12 +61,27 @@ import { IStatusKey, statusMessages } from '../../../core/models/status.model';
         class="{{ commonClasses }} resize-none"
         [attr.aria-invalid]="message?.invalid"
       ></textarea>
-      <button
-        type="submit"
-        class="w-fit border-2 border-neutral-600 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus:border-orange-500 focus:text-orange-500 focus:outline-none active:border-orange-500 active:text-orange-500"
-      >
-        Send message
-      </button>
+      <div class="relative isolate w-fit">
+        <button
+          type="submit"
+          class="border-2 bg-neutral-800 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus:text-orange-500 focus:outline-none active:border-orange-500 active:text-orange-500 {{
+            $isLoading()
+              ? 'border-transparent pointer-events-none'
+              : 'border-neutral-600 focus:border-orange-500'
+          }}"
+        >
+          Send message
+        </button>
+        @if ($isLoading()) {
+          <span
+            class="absolute -inset-0.5 -z-1 bg-conic-[from_var(--border-angle),var(--color-orange-300)_50%,var(--color-orange-600)]"
+            [vdAnimation]="{
+              keyframes: { '--border-angle': ['0deg', '360deg'] },
+              options: { duration: 2, repeat: infinity, ease: 'linear' },
+            }"
+          ></span>
+        }
+      </div>
       @if ($message()) {
         <p
           class="text-12px relative bg-orange-100 px-2 py-1 text-orange-900 selection:bg-orange-500 after:absolute after:-top-2 after:-left-2 after:size-3 after:bg-orange-900"
@@ -77,6 +93,7 @@ import { IStatusKey, statusMessages } from '../../../core/models/status.model';
   </section>`,
 })
 export class ContactSectionComponent implements OnInit {
+  infinity = Infinity;
   commonClasses =
     'border-y-2 border-t-transparent border-b-neutral-600 py-3 placeholder:text-neutral-400 hover:border-b-neutral-400 hover:placeholder:text-neutral-200 focus:border-b-orange-500 focus:outline-none focus:placeholder:opacity-0 grow';
   cForm!: FormGroup;
@@ -126,6 +143,7 @@ export class ContactSectionComponent implements OnInit {
 
     if (this.cForm.invalid) {
       this.$status.set('invalid');
+      this.$isLoading.set(false);
       return;
     }
 

@@ -64,7 +64,7 @@ export class CustomCursorComponent implements OnInit, AfterViewInit {
 
   private onElementHover(e: PointerEvent): void {
     const target = e.target as HTMLElement;
-    const isHovering = !!target.closest('a, button');
+    const isHovering = !!target.closest('a, button, input[type="submit"]');
 
     if (this.$lastHoveredEl() !== isHovering) {
       animate(this.cursorRef.nativeElement, {

@@ -106,3 +106,14 @@
     url('/fonts/kumar-one-regular.woff2') format('woff2'),
     url('/fonts/kumar-one-regular.woff') format('woff');
 }
+
+/* Courier Prime Font Family */
+@font-face {
+  font-family: 'Courier Prime';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src:
+    url('/fonts/courier-prime-bold.woff2') format('woff2'),
+    url('/fonts/courier-prime-bold.woff') format('woff');
+}

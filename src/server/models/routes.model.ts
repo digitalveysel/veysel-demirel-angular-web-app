@@ -1,3 +1,4 @@
 export enum Routes {
-  BASE = '/api',
+  API = '/api',
+  CONTACT = '/contact',
 }

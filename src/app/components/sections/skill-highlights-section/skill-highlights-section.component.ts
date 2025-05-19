@@ -12,7 +12,9 @@ import { IListItem } from '../../../core/models/list.model';
     class="space-y-4 py-12 lg:py-16"
     vdScrollSpy
   >
-    <h2 class="font-montserrat-alternates text-24px font-semibold xl:pl-4">Skill highlights</h2>
+    <h2 class="font-montserrat-alternates text-24px inline-block font-semibold xl:pl-4">
+      Skill highlights
+    </h2>
     <div class="border border-neutral-600 bg-neutral-800 p-4 lg:p-8">
       <vd-list [vdList]="skillHighlights" />
     </div>

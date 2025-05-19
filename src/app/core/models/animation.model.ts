@@ -1,15 +1,44 @@
-import { AnimationOptions, DOMKeyframesDefinition } from 'motion';
+import { AnimationOptions, DOMKeyframesDefinition, EventOptions } from 'motion';
 
-export interface IAnimation {
-  type?: 'pure' | 'hover' | 'inView';
+interface IBaseAnimation {
   selector?: string;
   keyframes: DOMKeyframesDefinition;
   options?: AnimationOptions;
-  callbackKeyframes?: DOMKeyframesDefinition;
-  callbackOptions?: AnimationOptions;
-  exitKeyframes?: DOMKeyframesDefinition;
-  exitOptions?: AnimationOptions;
 }
+
+interface IPureAnimation extends IBaseAnimation {
+  type?: 'pure';
+}
+
+type IMarginValue = `${number}${'px' | '%'}`;
+
+type IMarginType =
+  | IMarginValue
+  | `${IMarginValue} ${IMarginValue}`
+  | `${IMarginValue} ${IMarginValue} ${IMarginValue}`
+  | `${IMarginValue} ${IMarginValue} ${IMarginValue} ${IMarginValue}`;
+
+export interface IInViewOptions {
+  root?: Element | Document;
+  margin?: IMarginType;
+  amount?: 'some' | 'all' | number;
+}
+
+interface IInViewAnimation extends IBaseAnimation {
+  type: 'inView';
+  callbackKeyframes: DOMKeyframesDefinition;
+  callbackOptions?: AnimationOptions;
+  inViewOptions?: IInViewOptions;
+}
+
+interface IHoverAnimation extends IBaseAnimation {
+  type: 'hover' | 'inView';
+  callbackKeyframes: DOMKeyframesDefinition;
+  callbackOptions?: AnimationOptions;
+  hoverOptions?: EventOptions;
+}
+
+export type IAnimation = IPureAnimation | IInViewAnimation | IHoverAnimation;
 
 export enum IAnimationTypes {
   PURE = 'pure',

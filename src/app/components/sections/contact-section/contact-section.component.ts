@@ -82,11 +82,12 @@ import { ContactService } from '../../../core/services/contact/contact.service';
           </small>
         }
       </div>
-      <input
+      <button
         type="submit"
-        class="w-fit border-2 border-neutral-600 px-4 py-3 text-neutral-400 hover:border-neutral-400 hover:text-neutral-200 focus:border-orange-500 focus:text-orange-500 focus:outline-none"
-        value="Send message"
-      />
+        class="w-fit border-2 border-neutral-600 px-4 py-3 text-neutral-400 select-none hover:border-neutral-400 hover:text-neutral-200 focus:border-orange-500 focus:text-orange-500 focus:outline-none active:border-orange-500 active:text-orange-500"
+      >
+        Send message
+      </button>
     </form>
   </section>`,
 })

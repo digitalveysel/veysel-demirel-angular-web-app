@@ -8,22 +8,25 @@ import { AppStore } from '../../../core/store/app.store';
   selector: 'vd-music-player',
   imports: [IconComponent],
   template: `<div class="border border-neutral-600 bg-neutral-800 p-4 lg:p-8">
-    <div class="flex flex-col gap-y-4" #audio>
-      <button
-        class="flex h-3 bg-neutral-700"
+    <div class="flex flex-col gap-y-4">
+      <div
+        tabindex="0"
+        role="progressbar"
+        class="cursor-pointer-svg flex h-3 bg-neutral-700"
         aria-label="Progress Slider"
         (click)="onClickProgress($event)"
         (pointermove)="onPointerMoveProgress($event)"
         (pointerdown)="onPointerDownProgress()"
         (pointerup)="onPointerUpProgress()"
         (pointerleave)="onPointerUpProgress()"
+        (keydown)="onKeyDownProgress($event)"
         #progress
       >
         <span
           class="light:bg-orange-600 pointer-events-none basis-px bg-orange-300"
           #progressFilled
         ></span>
-      </button>
+      </div>
       <div class="flex items-end justify-between">
         <div class="flex gap-x-2">
           <button
@@ -66,8 +69,8 @@ export class MusicPlayerComponent {
   isPlaying = signal<boolean>(false);
   isMouseDown = signal<boolean>(false);
   currentTime = signal<string>('00:00');
+  audio!: HTMLAudioElement;
   private readonly name = 'valse';
-  private audio!: HTMLAudioElement;
   private onTimeUpdate = this.handleTimeUpdate.bind(this);
   private onEnded = this.handleEnded.bind(this);
 
@@ -120,6 +123,10 @@ export class MusicPlayerComponent {
 
   onPointerUpProgress(): void {
     this.isMouseDown.set(false);
+  }
+
+  onKeyDownProgress(event: KeyboardEvent): void {
+    console.log(event);
   }
 
   private pauseAudio(): void {

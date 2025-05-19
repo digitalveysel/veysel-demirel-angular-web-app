@@ -26,11 +26,11 @@ interface ITechIcon {
         <li
           [id]="techIcon.id"
           [vdCursorLabel]="techIcon.name"
-          class="group flex aspect-square items-center justify-center border-neutral-600 bg-neutral-800 odd:border-r nth-[-n+6]:border-b md:border-transparent md:odd:border-r-0 md:nth-[-n+6]:border-b-0"
+          class="group flex aspect-square items-center justify-center border-neutral-600 bg-neutral-800 select-none odd:border-r nth-[-n+6]:border-b md:border-transparent md:odd:border-r-0 md:nth-[-n+6]:border-b-0"
         >
           <vd-icon
             vdName="{{ techIcon.icon }}"
-            vdClass="text-neutral-100 opacity-50 group-hover:opacity-100 pointer-events-none"
+            vdClass="text-neutral-100 opacity-50 group-hover:opacity-100 pointer-events-none group-active:opacity-100"
           />
         </li>
       }

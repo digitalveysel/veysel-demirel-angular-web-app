@@ -35,7 +35,7 @@ export class ScrollSpyService {
           }
         });
       },
-      { threshold: 0.8 },
+      { threshold: 0.5 },
     );
 
     this.sections.forEach((section) => {

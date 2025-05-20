@@ -74,6 +74,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
         </button>
         @if ($isLoading()) {
           <span
+            aria-hidden="true"
             class="absolute -inset-0.5 -z-1 bg-conic-[from_var(--border-angle),var(--color-orange-300)_50%,var(--color-orange-600)]"
             [vdAnimation]="{
               keyframes: { '--border-angle': ['0deg', '360deg'] },
@@ -154,11 +155,10 @@ export class ContactSectionComponent implements OnInit {
         next: () => {
           this.$status.set('success');
           this.cForm.reset();
+          this.$isLoading.set(false);
         },
         error: () => {
           this.$status.set('failure');
-        },
-        complete: () => {
           this.$isLoading.set(false);
         },
       });

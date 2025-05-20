@@ -6,7 +6,6 @@
 [functions]
   external_node_modules = ["express", "@angular/ssr", "serverless-http", "nodemailer"]
   node_bundler = "esbuild"
-  format = "esm"
 
 [[redirects]]
   from   = "/*"

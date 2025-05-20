@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "format": "prettier --write .",
-    "prepare": "husky install",
+    "prepare": "npx husky init",
     "clean": "rimraf dist .angular cache"
   },
   "dependencies": {

@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { Contact, contactSchema } from '../models/contact.model';
 import ContactService from '../services/contact.service';
 import { Config } from '../models/config.model';
+import Logger from '../utils/logger.utils';
 
 export default class ContactController {
   private readonly router = Router();
@@ -32,7 +33,7 @@ export default class ContactController {
     res: Response<Contact>,
     next: NextFunction,
   ): Promise<void> {
-    res.status(200);
+    Logger.info('[ContactController] New send call');
     try {
       const { value, error } = contactSchema.validate(req.body, { abortEarly: false });
 

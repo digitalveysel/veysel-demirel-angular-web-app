@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomePageComponent },
-      { path: '**', component: HomePageComponent },
+      { path: '**', redirectTo: '' },
     ],
   },
 ];

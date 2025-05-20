@@ -1,4 +1,3 @@
-import { AngularNodeAppEngine, writeResponseToNodeResponse } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,7 +10,6 @@ const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
 
 const config = AppConfig.getInstance().values;
 const contactController = new ContactController(config);
@@ -25,11 +23,18 @@ app.use(
     redirect: false,
   }),
 );
-app.use('/**', (req, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
-    .catch(next);
+app.use('/**', async (req, res, next) => {
+  try {
+    const { AngularNodeAppEngine, writeResponseToNodeResponse } = await import('@angular/ssr/node');
+    const angularApp = new AngularNodeAppEngine();
+    const response = await angularApp.handle(req);
+    if (response) {
+      return writeResponseToNodeResponse(response, res);
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 export const handler = serverless(app);

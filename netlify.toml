@@ -4,10 +4,10 @@
   functions = "netlify/functions"
 
 [functions]
-  external_node_modules = ["express", "@angular/ssr", "serverless-http"]
+  external_node_modules = ["express", "@angular/ssr", "serverless-http", "nodemailer"]
   node_bundler = "esbuild"
 
 [[redirects]]
-  from   = "/api/contact"
-  to     = "/.netlify/functions/contact"
+  from   = "/*"
+  to     = "/.netlify/functions/ssr"
   status = 200

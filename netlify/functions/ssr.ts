@@ -6,7 +6,8 @@ import AppConfig from '../../src/server/app.config';
 import ContactController from '../../src/server/controllers/contact.controller';
 import { Routes } from '../../src/server/models/routes.model';
 
-const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const serverDistFolder =
+  typeof __dirname !== 'undefined' ? __dirname : dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();

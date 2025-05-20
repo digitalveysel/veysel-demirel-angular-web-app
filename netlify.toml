@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  dist = "dist/veysel-demirel-angular-web-app/browser"
+  publish = "dist/veysel-demirel-angular-web-app/browser"
   functions = "netlify/functions"
 
 [functions]
@@ -8,6 +8,6 @@
   node_bundler = "esbuild"
 
 [[redirects]]
-  from   = "/api/*"
+  from   = "/*"
   to     = "/.netlify/functions/ssr"
   status = 200

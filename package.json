@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "format": "prettier --write .",
     "prepare": "npx husky init",
-    "clean": "rimraf dist .angular cache"
+    "clean": "rimraf dist .angular .netlify cache"
   },
   "dependencies": {
     "@angular/common": "^19.2.0",
@@ -26,8 +26,10 @@
     "@angular/ssr": "^19.2.8",
     "@netlify/angular-runtime": "^2.3.1",
     "@netlify/functions": "^3.1.8",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.18.2",
+    "helmet": "^8.1.0",
     "joi": "^17.13.3",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.3",

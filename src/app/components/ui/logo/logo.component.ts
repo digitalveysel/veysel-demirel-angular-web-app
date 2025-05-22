@@ -12,7 +12,6 @@ import { AppStore } from '../../../core/store/app.store';
     fragment="hero"
     id="logo"
     class="text-20px flex items-center gap-x-1 font-semibold line-through"
-    role="img"
     aria-label="Logo"
     (click)="onClick()"
   >

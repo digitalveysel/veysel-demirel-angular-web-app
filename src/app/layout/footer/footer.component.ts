@@ -3,6 +3,7 @@ import { IconComponent } from '../../components/ui/icon/icon.component';
 
 interface ISocialItems {
   id: string;
+  name: string;
   icon: string;
   link: string;
 }
@@ -19,6 +20,7 @@ interface ISocialItems {
           <a
             [id]="item.id"
             [href]="item.link"
+            [attr.aria-label]="item.name"
             target="_blank"
             class="flex items-center justify-center p-2"
           >
@@ -33,16 +35,19 @@ export class FooterComponent {
   items: ISocialItems[] = [
     {
       id: 'githubAnchor',
+      name: 'GitHub',
       icon: 'github',
       link: 'https://github.com/digitalveysel',
     },
     {
       id: 'figmaAnchor',
+      name: 'Figma',
       icon: 'figma',
       link: 'https://www.figma.com/@digitalveysel',
     },
     {
       id: 'linkedInAnchor',
+      name: 'LinkedIn',
       icon: 'linkedin',
       link: 'https://linkedin.com/in/digitalveysel',
     },

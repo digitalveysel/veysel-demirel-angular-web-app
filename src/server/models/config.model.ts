@@ -8,6 +8,7 @@ export interface Config {
   SMTP_PASS: string;
   HOST_MAIL: string;
   HOST_NAME: string;
+  ALLOWED_ORIGIN: string;
 }
 
 export const configSchema = Joi.object<Config>({
@@ -18,4 +19,5 @@ export const configSchema = Joi.object<Config>({
   SMTP_PASS: Joi.string().required(),
   HOST_MAIL: Joi.string().required(),
   HOST_NAME: Joi.string().required(),
+  ALLOWED_ORIGIN: Joi.string().required(),
 }).required();

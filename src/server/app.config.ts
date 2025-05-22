@@ -7,8 +7,8 @@ export default class AppConfig {
   public readonly values: Config;
   private static instance: AppConfig;
 
-  private constructor() {
-    loadEnv({ path: resolve(process.cwd(), '.env') });
+  private constructor(envPath = '.env') {
+    loadEnv({ path: resolve(process.cwd(), envPath) });
 
     const { value, error } = configSchema.validate(process.env, {
       abortEarly: false,
@@ -21,16 +21,8 @@ export default class AppConfig {
       process.exit(1);
     }
 
+    this.values = { ...value };
     Logger.info('[Config] Loaded configuration');
-    this.values = {
-      PORT: value.PORT,
-      SMTP_HOST: value.SMTP_HOST,
-      SMTP_PORT: value.SMTP_PORT,
-      SMTP_USER: value.SMTP_USER,
-      SMTP_PASS: value.SMTP_PASS,
-      HOST_MAIL: value.HOST_MAIL,
-      HOST_NAME: value.HOST_NAME,
-    };
   }
 
   public static getInstance(): AppConfig {

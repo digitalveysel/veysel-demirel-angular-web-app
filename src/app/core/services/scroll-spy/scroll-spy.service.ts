@@ -1,6 +1,6 @@
-import { afterNextRender, ApplicationRef, Injectable } from '@angular/core';
+import { afterNextRender, ApplicationRef, Inject, Injectable } from '@angular/core';
 import { AppStore } from '../../store/app.store';
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { first } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class ScrollSpyService {
     private store: AppStore,
     private location: Location,
     private appRef: ApplicationRef,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     afterNextRender(() => {
       this.checkApp();
@@ -26,7 +27,21 @@ export class ScrollSpyService {
     });
   }
 
+  private calculateDynamicThreshold(): number {
+    const vh = this.document.defaultView?.innerHeight;
+    const sectionHeights = Array.from(this.sections.values()).map((el) => el.offsetHeight);
+    const desiredVisibleRatio = 0.8;
+    const thresholds = sectionHeights.map((height) => {
+      const ratio = (vh! * desiredVisibleRatio) / height;
+      return Math.min(1, Math.max(0.1, ratio));
+    });
+
+    return Math.min(...thresholds);
+  }
+
   private startObserving(): void {
+    const threshold = this.calculateDynamicThreshold();
+
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -35,7 +50,7 @@ export class ScrollSpyService {
           }
         });
       },
-      { threshold: 1 },
+      { threshold },
     );
 
     this.sections.forEach((section) => {

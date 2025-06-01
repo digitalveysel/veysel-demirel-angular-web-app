@@ -19,7 +19,7 @@ import { MusicPlayerComponent } from '../../features/music-player/music-player.c
           <span
             class="light:from-orange-500 light:to-orange-500 bg-linear-to-r from-orange-600 to-orange-300 bg-clip-text font-extrabold text-transparent"
             >veysel demirel</span
-          >, as a front-end developer and ui/ux designer based in Türkiye.
+          >, as a frontend engineer and ui/ux designer based in Türkiye.
         </h1>
         <vd-typing-animation
           [vdSubject]="'I'"

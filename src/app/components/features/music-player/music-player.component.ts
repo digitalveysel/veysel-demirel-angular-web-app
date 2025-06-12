@@ -14,7 +14,7 @@ import { IMusicPlayerKeys } from '../../../core/models/keyboard.model';
         tabindex="0"
         role="progressbar"
         class="cursor-pointer-svg flex h-3 bg-neutral-700"
-        aria-label="Progress Slider"
+        aria-label="Music Player Progress Bar"
         aria-valuemin="0"
         aria-valuemax="206"
         [attr.aria-valuenow]="$currentTime()"

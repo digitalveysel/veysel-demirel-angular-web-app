@@ -50,7 +50,7 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
         [class]="commonClasses"
         [attr.aria-invalid]="email?.invalid"
       />
-      <label for="Message" class="sr-only">Message</label>
+      <label for="message" class="sr-only">Message</label>
       <textarea
         id="message"
         name="message"
@@ -84,11 +84,14 @@ import { AnimationDirective } from '../../../directives/animation/animation.dire
         }
       </div>
       @if ($message()) {
-        <p
+        <span
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
           class="text-12px relative bg-orange-100 px-2 py-1 text-orange-900 selection:bg-orange-500 after:absolute after:-top-2 after:-left-2 after:size-3 after:bg-orange-900"
         >
           {{ $message() }}
-        </p>
+        </span>
       }
     </form>
   </section>`,
@@ -143,8 +146,10 @@ export class ContactSectionComponent implements OnInit {
     this.$status.set('default');
 
     if (this.cForm.invalid) {
-      this.$status.set('invalid');
-      this.$isLoading.set(false);
+      setTimeout(() => {
+        this.$status.set('invalid');
+        this.$isLoading.set(false);
+      }, 0);
       return;
     }
 

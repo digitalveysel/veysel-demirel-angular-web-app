@@ -12,7 +12,7 @@ import {
 @Component({
   selector: 'vd-typing-animation',
   template: `
-    <p class="text-16px md:text-24px font-semibold italic">
+    <p aria-hidden="true" class="text-16px md:text-24px font-semibold italic">
       <span>{{ vdSubject + ' ' }}</span>
       <span>{{ $displayVerb() + ' ' }}</span>
       <span class="text-orange-500">{{ $displayPhrase() }}</span>

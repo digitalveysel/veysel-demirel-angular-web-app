@@ -143,7 +143,6 @@ export class ContactSectionComponent implements OnInit {
 
   onSubmit(): void {
     this.$isLoading.set(true);
-    this.$status.set('default');
 
     if (this.cForm.invalid) {
       setTimeout(() => {
@@ -152,6 +151,8 @@ export class ContactSectionComponent implements OnInit {
       }, 0);
       return;
     }
+
+    this.$status.set('default');
 
     this.contactService
       .send(this.cForm.value)

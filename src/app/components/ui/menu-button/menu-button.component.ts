@@ -10,6 +10,8 @@ import { SoundService } from '../../../core/services/sound/sound.service';
   template: `<button
     id="menuButton"
     aria-label="Toggle Menu"
+    aria-controls="menu"
+    [attr.aria-expanded]="store.isMenuOpen()"
     class="flex size-10 items-center justify-center p-1"
     (click)="onClick()"
   >
